@@ -64,7 +64,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Java,APT,Annotation," />
 
 
 
@@ -82,15 +82,19 @@
 
 
 
-<meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Min's Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="概述从JDK1.6开始提供了一个新的被称为APT(Annotation Processing Tool)的工具，使用其提供的APT我们可以通过类似数据结构的方式来访问被编译的Java的源代码。
+利用这个新的工具提供的API我们可以在编译Java源代码的同时对现有代码进行增强和生成代码，比之以往通过运行时的反射以及通过Java的动态代理或者运行时字节码修改来增强要来的更简单并且运行时的效率要更高（指">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从APT中获取运行时类信息">
+<meta property="og:url" content="http://yoursite.com/2016/04/14/Get-class-info-from-APT/index.html">
 <meta property="og:site_name" content="Min's Blog">
-<meta property="og:description">
+<meta property="og:description" content="概述从JDK1.6开始提供了一个新的被称为APT(Annotation Processing Tool)的工具，使用其提供的APT我们可以通过类似数据结构的方式来访问被编译的Java的源代码。
+利用这个新的工具提供的API我们可以在编译Java源代码的同时对现有代码进行增强和生成代码，比之以往通过运行时的反射以及通过Java的动态代理或者运行时字节码修改来增强要来的更简单并且运行时的效率要更高（指">
+<meta property="og:updated_time" content="2016-04-14T12:48:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Min's Blog">
-<meta name="twitter:description">
+<meta name="twitter:title" content="从APT中获取运行时类信息">
+<meta name="twitter:description" content="概述从JDK1.6开始提供了一个新的被称为APT(Annotation Processing Tool)的工具，使用其提供的APT我们可以通过类似数据结构的方式来访问被编译的Java的源代码。
+利用这个新的工具提供的API我们可以在编译Java源代码的同时对现有代码进行增强和生成代码，比之以往通过运行时的反射以及通过Java的动态代理或者运行时字节码修改来增强要来的更简单并且运行时的效率要更高（指">
 
 
 
@@ -108,7 +112,7 @@
   };
 </script>
 
-  <title> Min's Blog </title>
+  <title> 从APT中获取运行时类信息 | Min's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -129,9 +133,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -228,9 +230,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -250,10 +252,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/04/14/Get-class-info-from-APT/" itemprop="url">
-                  从APT中获取运行时类信息
-                </a>
+                从APT中获取运行时类信息
               
             
           </h1>
@@ -299,9 +298,7 @@
       
 
       
-        
-          
-            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>从JDK1.6开始提供了一个新的被称为APT(Annotation Processing Tool)的工具，使用其提供的APT我们可以通过类似数据结构的方式来访问被编译的Java的源代码。</p>
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>从JDK1.6开始提供了一个新的被称为APT(Annotation Processing Tool)的工具，使用其提供的APT我们可以通过类似数据结构的方式来访问被编译的Java的源代码。</p>
 <p>利用这个新的工具提供的API我们可以在编译Java源代码的同时对现有代码进行增强和生成代码，比之以往通过运行时的反射以及通过Java的动态代理或者运行时字节码修改来增强要来的更简单并且运行时的效率要更高（指启动时间）</p>
 <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在Java程序运行时可以通过反射来获取类的Meta信息，但是在APT中处理的是Java源代码，此时无法直接获取定义在Annotation里面的类型信息，因为没有反射API可以使用。<br>例如我们定义了一个注解：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Service &#123;</span><br><span class="line"></span><br><span class="line">    Class[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>该注解接受一个Class的参数，注意该注解仅可见于源代码编译过程。</p>
@@ -325,138 +322,61 @@
 <p>上面代码使用rxJava以及Lambda表达式来简化代码。</p>
 <p>参见我的项目源码：<a href="https://github.com/minjing/uapi/blob/master/uapi.kernel.annotation/src/main/java/uapi/annotation/AnnotationsHandler.java" target="_blank" rel="external">这里</a></p>
 
-          
-        
       
     </div>
     
     <div>
       
+        
+      
     </div>
 
     <div>
+      
+        
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/13/Create-empty-branch-in-GIT/" itemprop="url">
-                  在GIT中创建一个空分支
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-13T15:18:50+08:00" content="2016-04-13">
-              2016-04-13
-            </time>
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/Java/" rel="tag">#Java</a>
           
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/13/Create-empty-branch-in-GIT/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/13/Create-empty-branch-in-GIT/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
+            <a href="/tags/APT/" rel="tag">#APT</a>
           
-
+            <a href="/tags/Annotation/" rel="tag">#Annotation</a>
           
-
-          
-          
-
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>有时候我们需要在GIT里面创建一个空分支，该分支不继承任何提交，没有父节点，完全是一个干净的分支，例如我们需要在某个分支里存放项目文档。<br>使用传统的git checkout命令创建的分支是有父节点的，意味着新branch包含了历史提交，所以我们无法直接使用该命令。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/13/Create-empty-branch-in-GIT/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/13/Create-empty-branch-in-GIT/" rel="next" title="在GIT中创建一个空分支">
+                <i class="fa fa-chevron-left"></i> 在GIT中创建一个空分支
+              </a>
+            
           </div>
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
 
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -464,6 +384,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/14/Get-class-info-from-APT/"
+           data-title="从APT中获取运行时类信息" data-url="http://yoursite.com/2016/04/14/Get-class-info-from-APT/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -483,8 +411,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -565,6 +502,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述"><span class="nav-number">2.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">3.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取AnnotationMirror对象"><span class="nav-number">3.1.</span> <span class="nav-text">获取AnnotationMirror对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取Annotation定义的元素列表"><span class="nav-number">3.2.</span> <span class="nav-text">获取Annotation定义的元素列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取TypeElement"><span class="nav-number">3.3.</span> <span class="nav-text">获取TypeElement</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整代码"><span class="nav-number">3.4.</span> <span class="nav-text">完整代码</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -667,6 +615,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 

@@ -90,7 +90,7 @@
 <meta property="og:site_name" content="Min's Blog">
 <meta property="og:description" content="概述从JDK1.6开始提供了一个新的被称为APT(Annotation Processing Tool)的工具，使用其提供的APT我们可以通过类似数据结构的方式来访问被编译的Java的源代码。
 利用这个新的工具提供的API我们可以在编译Java源代码的同时对现有代码进行增强和生成代码，比之以往通过运行时的反射以及通过Java的动态代理或者运行时字节码修改来增强要来的更简单并且运行时的效率要更高（指">
-<meta property="og:updated_time" content="2016-04-14T12:48:58.000Z">
+<meta property="og:updated_time" content="2016-04-14T12:51:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从APT中获取运行时类信息">
 <meta name="twitter:description" content="概述从JDK1.6开始提供了一个新的被称为APT(Annotation Processing Tool)的工具，使用其提供的APT我们可以通过类似数据结构的方式来访问被编译的Java的源代码。
@@ -304,6 +304,7 @@
 <p>该注解接受一个Class的参数，注意该注解仅可见于源代码编译过程。</p>
 <p>如果想在APT中获取Service.value，下面代码是不可行的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">Service service = ...</span><br><span class="line">Class[] cls = service.value();</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
 <p>运行这段代码会在编译时抛出异常，因为在编译时类型信息无法直接获取，只有Native数据和String可以直接获取。</p>
+<a id="more"></a>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>如何解决该问题呢？我们需要使用APT提供的*Mirror API获取Class的相关信息。</p>
 <h3 id="获取AnnotationMirror对象"><a href="#获取AnnotationMirror对象" class="headerlink" title="获取AnnotationMirror对象"></a>获取AnnotationMirror对象</h3><p>首先获取AnnotationMirror对象：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AnnotationMirror svcAnnoMirror =</span><br><span class="line">  MoreElements.getAnnotationMirror(classElement, Service.class).get();</span><br></pre></td></tr></table></figure></p>
 <p>MoreElements是Google Auto库里面的一个工具类，getAnnotationMirror方法比较简单，它返回Service Annotation对应的AnnotationMirror对象。</p>

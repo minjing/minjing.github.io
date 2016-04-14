@@ -300,32 +300,17 @@
 
       
         
-          
-            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>从JDK1.6开始提供了一个新的被称为APT(Annotation Processing Tool)的工具，使用其提供的APT我们可以通过类似数据结构的方式来访问被编译的Java的源代码。</p>
+          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>从JDK1.6开始提供了一个新的被称为APT(Annotation Processing Tool)的工具，使用其提供的APT我们可以通过类似数据结构的方式来访问被编译的Java的源代码。</p>
 <p>利用这个新的工具提供的API我们可以在编译Java源代码的同时对现有代码进行增强和生成代码，比之以往通过运行时的反射以及通过Java的动态代理或者运行时字节码修改来增强要来的更简单并且运行时的效率要更高（指启动时间）</p>
 <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在Java程序运行时可以通过反射来获取类的Meta信息，但是在APT中处理的是Java源代码，此时无法直接获取定义在Annotation里面的类型信息，因为没有反射API可以使用。<br>例如我们定义了一个注解：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Service &#123;</span><br><span class="line"></span><br><span class="line">    Class[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>该注解接受一个Class的参数，注意该注解仅可见于源代码编译过程。</p>
 <p>如果想在APT中获取Service.value，下面代码是不可行的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">Service service = ...</span><br><span class="line">Class[] cls = service.value();</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
 <p>运行这段代码会在编译时抛出异常，因为在编译时类型信息无法直接获取，只有Native数据和String可以直接获取。</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>如何解决该问题呢？我们需要使用APT提供的*Mirror API获取Class的相关信息。</p>
-<h3 id="获取AnnotationMirror对象"><a href="#获取AnnotationMirror对象" class="headerlink" title="获取AnnotationMirror对象"></a>获取AnnotationMirror对象</h3><p>首先获取AnnotationMirror对象：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AnnotationMirror svcAnnoMirror =</span><br><span class="line">  MoreElements.getAnnotationMirror(classElement, Service.class).get();</span><br></pre></td></tr></table></figure></p>
-<p>MoreElements是Google Auto库里面的一个工具类，getAnnotationMirror方法比较简单，它返回Service Annotation对应的AnnotationMirror对象。</p>
-<p>上面的classElement是一个javax.lang.model.element.Element实例，在这里它代表了申明了Service这个Annotation的类的元素。</p>
-<blockquote>
-<p>在APT里面，Java源代码会被解释称类似XML的结构，比如类，字段，方法，方法的参数等都会被解释称一个元素，每个元素都是Element的实例</p>
-</blockquote>
-<h3 id="获取Annotation定义的元素列表"><a href="#获取Annotation定义的元素列表" class="headerlink" title="获取Annotation定义的元素列表"></a>获取Annotation定义的元素列表</h3><p>然后获取该Annotation里面定义的所有元素的列表:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;Element&gt; elementSet = svcAnnoMirror.getElementValues().entrySet();</span><br></pre></td></tr></table></figure></p>
-<p>过滤出key是value的那个元素<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (entry.getKey().getSimpleName().toString().equals(<span class="string">"value"</span>)) &#123;</span><br><span class="line">  AnnotationValues annoValue = entry.getValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="获取TypeElement"><a href="#获取TypeElement" class="headerlink" title="获取TypeElement"></a>获取TypeElement</h3><p>有了AnnotationValue，我们就可以取得内部的值：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;AnnotationValue&gt; values = (List&lt;AnnotationValue&gt;) annoValue.getValue();</span><br></pre></td></tr></table></figure></p>
-<p>因为我们定义了Service.value是一个Class数组，所以这里我们需要把返回值强制转换成List。</p>
-<p>为了获取Service.value里面定义的Class信息，我们需要使用TypeMirror API<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DeclaredType declaredType = (DeclaredType) value.getValue();</span><br><span class="line">TypeElement typeElement = (TypeElement) declaredType.asElement();</span><br></pre></td></tr></table></figure></p>
-<p>有了TypeElement，我们就可以访问该类型相关的信息了，比如获取其完整类名：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typeElement.getQualifiedName().toString();</span><br></pre></td></tr></table></figure></p>
-<p>当然获取它的实现的接口或者定义在它内部的方法或者字段都是可以的。</p>
-<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">AnnotationMirror svcAnnoMirror =</span><br><span class="line">    MoreElements.getAnnotationMirror(classElement, Service.class).get();</span><br><span class="line">List&lt;String&gt; types = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">Observable.from(svcAnnoMirror.getElementValues().entrySet())</span><br><span class="line">      .filter(entry -&gt; <span class="string">"value"</span>.equals(entry.getKey().getSimpleName().toString()))</span><br><span class="line">      .map(Map.Entry::getValue)</span><br><span class="line">      .flatMap(annoValue -&gt; Observable.from((List&lt;AnnotationValue&gt;) annoValue.getValue()))</span><br><span class="line">      .map(annoValue -&gt; (DeclaredType) annoValue.getValue())</span><br><span class="line">      .map(declaredType -&gt; (TypeElement) declaredType.asElement())</span><br><span class="line">      .map(typeElem -&gt; typeElem.getQualifiedName().toString())</span><br><span class="line">      .subscribe(types::add, logger::error);</span><br></pre></td></tr></table></figure>
-<p>上面代码使用rxJava以及Lambda表达式来简化代码。</p>
-<p>参见我的项目源码：<a href="https://github.com/minjing/uapi/blob/master/uapi.kernel.annotation/src/main/java/uapi/annotation/AnnotationsHandler.java" target="_blank" rel="external">这里</a></p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/14/Get-class-info-from-APT/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>

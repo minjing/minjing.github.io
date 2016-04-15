@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-04-14T12:51:05.000Z</updated>
+  <updated>2016-04-15T01:32:55.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2016/04/14/Get-class-info-from-APT/"/>
     <id>http://yoursite.com/2016/04/14/Get-class-info-from-APT/</id>
     <published>2016-04-14T12:48:58.000Z</published>
-    <updated>2016-04-14T12:51:05.000Z</updated>
+    <updated>2016-04-15T01:32:55.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;从JDK1.6开始提供了一个新的被称为APT(Annotation Processing Tool)的工具，使用其提供的APT我们可以通过类似数据结构的方式来访问被编译的Java的源代码。&lt;/p&gt;
 &lt;p&gt;利用这个新的工具提供的API我们可以在编译Java源代码的同时对现有代码进行增强和生成代码，比之以往通过运行时的反射以及通过Java的动态代理或者运行时字节码修改来增强要来的更简单并且运行时的效率要更高（指启动时间）&lt;/p&gt;
@@ -59,6 +59,8 @@
     
     </summary>
     
+      <category term="Development" scheme="http://yoursite.com/categories/Development/"/>
+    
     
       <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
@@ -73,7 +75,7 @@
     <link href="http://yoursite.com/2016/04/13/Create-empty-branch-in-GIT/"/>
     <id>http://yoursite.com/2016/04/13/Create-empty-branch-in-GIT/</id>
     <published>2016-04-13T07:18:50.000Z</published>
-    <updated>2016-04-13T12:14:21.000Z</updated>
+    <updated>2016-04-15T01:32:29.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h2&gt;&lt;p&gt;有时候我们需要在GIT里面创建一个空分支，该分支不继承任何提交，没有父节点，完全是一个干净的分支，例如我们需要在某个分支里存放项目文档。&lt;br&gt;使用传统的git checkout命令创建的分支是有父节点的，意味着新branch包含了历史提交，所以我们无法直接使用该命令。&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -93,6 +95,8 @@
       &lt;h2 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h2&gt;&lt;p&gt;有时候我们需要在GIT里面创建一个空分支，该分支不继承任何提交，没有父节点，完全是一个干净的分支，例如我们需要在某个分支里存放项目文档。&lt;br&gt;使用传统的git checkout命令创建的分支是有父节点的，意味着新branch包含了历史提交，所以我们无法直接使用该命令。&lt;/p&gt;
     
     </summary>
+    
+      <category term="Development" scheme="http://yoursite.com/categories/Development/"/>
     
     
       <category term="GIT" scheme="http://yoursite.com/tags/GIT/"/>

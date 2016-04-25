@@ -251,6 +251,129 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/25/Consul-Getting-Started-01-Install-Consul/" itemprop="url">
+                  安装Consul
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-25T20:14:51+08:00" content="2016-04-25">
+              2016-04-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Development/" itemprop="url" rel="index">
+                    <span itemprop="name">Development</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/25/Consul-Getting-Started-01-Install-Consul/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/25/Consul-Getting-Started-01-Install-Consul/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Consul必须首先安装在每个节点上当该节点需要称为Consul集群中的成员。为了使得安装更容易，Consul为所有支持的平台提供了二进制安装包。本页面不描述如何从源码来编译Consul。</p>
+<h2 id="安装Consul"><a href="#安装Consul" class="headerlink" title="安装Consul"></a>安装Consul</h2><p>为了安装Consul，需要在<a href="https://www.consul.io/downloads.html">下载页面</a>中找到和你系统匹配的包。Consul被打包成zip格式的压缩包。</p>
+<p>解压Consul zip包，复制<em>consul</em>二进制文件到系统<em>PATH</em>中包含的路径下，以确保它可以被执行。在Unix系统中，<em>~/bin</em>和<em>/usr/local/bin</em>是通常的安装路径，选择哪个依赖于你安装Consul给单个用户使用还是所有用户都可以使用。对于Windows系统，你可以安装到任意目录，不过不要忘记将安装目录加入到<em>%PATH%</em>中去。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/25/Consul-Getting-Started-01-Install-Consul/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/14/Get-class-info-from-APT/" itemprop="url">
                   从APT中获取运行时类信息
                 </a>
@@ -321,10 +444,6 @@
         
           <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>从JDK1.6开始提供了一个新的被称为APT(Annotation Processing Tool)的工具，使用其提供的APT我们可以通过类似数据结构的方式来访问被编译的Java的源代码。</p>
 <p>利用这个新的工具提供的API我们可以在编译Java源代码的同时对现有代码进行增强和生成代码，比之以往通过运行时的反射以及通过Java的动态代理或者运行时字节码修改来增强要来的更简单并且运行时的效率要更高（指启动时间）</p>
-<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在Java程序运行时可以通过反射来获取类的Meta信息，但是在APT中处理的是Java源代码，此时无法直接获取定义在Annotation里面的类型信息，因为没有反射API可以使用。<br>例如我们定义了一个注解：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Service &#123;</span><br><span class="line"></span><br><span class="line">    Class[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>该注解接受一个Class的参数，注意该注解仅可见于源代码编译过程。</p>
-<p>如果想在APT中获取Service.value，下面代码是不可行的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">Service service = ...</span><br><span class="line">Class[] cls = service.value();</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<p>运行这段代码会在编译时抛出异常，因为在编译时类型信息无法直接获取，只有Native数据和String可以直接获取。</p>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/04/14/Get-class-info-from-APT/#more" rel="contents">
               阅读全文 &raquo;
@@ -518,7 +637,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -535,7 +654,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

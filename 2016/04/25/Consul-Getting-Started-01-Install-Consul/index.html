@@ -64,7 +64,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="GIT," />
+  <meta name="keywords" content="Consul,MicroService," />
 
 
 
@@ -82,16 +82,22 @@
 
 
 
-<meta name="description" content="问题描述有时候我们需要在GIT里面创建一个空分支，该分支不继承任何提交，没有父节点，完全是一个干净的分支，例如我们需要在某个分支里存放项目文档。使用传统的git checkout命令创建的分支是有父节点的，意味着新branch包含了历史提交，所以我们无法直接使用该命令。">
+<meta name="description" content="Consul必须首先安装在每个节点上当该节点需要称为Consul集群中的成员。为了使得安装更容易，Consul为所有支持的平台提供了二进制安装包。本页面不描述如何从源码来编译Consul。
+安装Consul为了安装Consul，需要在下载页面中找到和你系统匹配的包。Consul被打包成zip格式的压缩包。
+解压Consul zip包，复制consul二进制文件到系统PATH中包含的路径下，以确保它">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在GIT中创建一个空分支">
-<meta property="og:url" content="http://yoursite.com/2016/04/13/Create-empty-branch-in-GIT/index.html">
+<meta property="og:title" content="安装Consul">
+<meta property="og:url" content="http://yoursite.com/2016/04/25/Consul-Getting-Started-01-Install-Consul/index.html">
 <meta property="og:site_name" content="Min's Blog">
-<meta property="og:description" content="问题描述有时候我们需要在GIT里面创建一个空分支，该分支不继承任何提交，没有父节点，完全是一个干净的分支，例如我们需要在某个分支里存放项目文档。使用传统的git checkout命令创建的分支是有父节点的，意味着新branch包含了历史提交，所以我们无法直接使用该命令。">
-<meta property="og:updated_time" content="2016-04-15T01:32:29.000Z">
+<meta property="og:description" content="Consul必须首先安装在每个节点上当该节点需要称为Consul集群中的成员。为了使得安装更容易，Consul为所有支持的平台提供了二进制安装包。本页面不描述如何从源码来编译Consul。
+安装Consul为了安装Consul，需要在下载页面中找到和你系统匹配的包。Consul被打包成zip格式的压缩包。
+解压Consul zip包，复制consul二进制文件到系统PATH中包含的路径下，以确保它">
+<meta property="og:updated_time" content="2016-04-25T12:43:41.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在GIT中创建一个空分支">
-<meta name="twitter:description" content="问题描述有时候我们需要在GIT里面创建一个空分支，该分支不继承任何提交，没有父节点，完全是一个干净的分支，例如我们需要在某个分支里存放项目文档。使用传统的git checkout命令创建的分支是有父节点的，意味着新branch包含了历史提交，所以我们无法直接使用该命令。">
+<meta name="twitter:title" content="安装Consul">
+<meta name="twitter:description" content="Consul必须首先安装在每个节点上当该节点需要称为Consul集群中的成员。为了使得安装更容易，Consul为所有支持的平台提供了二进制安装包。本页面不描述如何从源码来编译Consul。
+安装Consul为了安装Consul，需要在下载页面中找到和你系统匹配的包。Consul被打包成zip格式的压缩包。
+解压Consul zip包，复制consul二进制文件到系统PATH中包含的路径下，以确保它">
 
 
 
@@ -109,7 +115,7 @@
   };
 </script>
 
-  <title> 在GIT中创建一个空分支 | Min's Blog </title>
+  <title> 安装Consul | Min's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -249,7 +255,7 @@
             
             
               
-                在GIT中创建一个空分支
+                安装Consul
               
             
           </h1>
@@ -261,8 +267,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-13T15:18:50+08:00" content="2016-04-13">
-              2016-04-13
+            <time itemprop="dateCreated" datetime="2016-04-25T20:14:51+08:00" content="2016-04-25">
+              2016-04-25
             </time>
           </span>
 
@@ -291,8 +297,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/13/Create-empty-branch-in-GIT/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/13/Create-empty-branch-in-GIT/" itemprop="commentsCount"></span>
+                <a href="/2016/04/25/Consul-Getting-Started-01-Install-Consul/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/25/Consul-Getting-Started-01-Install-Consul/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -314,17 +320,16 @@
       
 
       
-        <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>有时候我们需要在GIT里面创建一个空分支，该分支不继承任何提交，没有父节点，完全是一个干净的分支，例如我们需要在某个分支里存放项目文档。<br>使用传统的git checkout命令创建的分支是有父节点的，意味着新branch包含了历史提交，所以我们无法直接使用该命令。</p>
+        <p>Consul必须首先安装在每个节点上当该节点需要称为Consul集群中的成员。为了使得安装更容易，Consul为所有支持的平台提供了二进制安装包。本页面不描述如何从源码来编译Consul。</p>
+<h2 id="安装Consul"><a href="#安装Consul" class="headerlink" title="安装Consul"></a>安装Consul</h2><p>为了安装Consul，需要在<a href="https://www.consul.io/downloads.html" target="_blank" rel="external">下载页面</a>中找到和你系统匹配的包。Consul被打包成zip格式的压缩包。</p>
+<p>解压Consul zip包，复制<em>consul</em>二进制文件到系统<em>PATH</em>中包含的路径下，以确保它可以被执行。在Unix系统中，<em>~/bin</em>和<em>/usr/local/bin</em>是通常的安装路径，选择哪个依赖于你安装Consul给单个用户使用还是所有用户都可以使用。对于Windows系统，你可以安装到任意目录，不过不要忘记将安装目录加入到<em>%PATH%</em>中去。</p>
 <a id="more"></a>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><h3 id="创建分支"><a href="#创建分支" class="headerlink" title="创建分支"></a>创建分支</h3><p>使用 git checkout的–orphan参数:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout --orphan doc</span><br></pre></td></tr></table></figure></p>
-<p>该命令会创建一个名为doc的分支，并且该分支下有前一个分支下的所有文件。<br>查看–orphan的帮助：</p>
-<blockquote>
-<p>Create a new orphan branch, named <new_branch>, started from <start point=""> and switch to it. The first commit made on the new branch will have no parents and it will be the root of a new history totally disconnected from all the other branchs and commits.</start></new_branch></p>
-</blockquote>
-<p>这里的start point指的是你执行git checkout命令时的那个分支，当然新的分支不会指向任何以前的提交，就是它没有历史，如果你提交当前内容，那么这次提交就是这个分支的首次提交。</p>
-<h3 id="删除所有内容"><a href="#删除所有内容" class="headerlink" title="删除所有内容"></a>删除所有内容</h3><p>我们不想提交任何内容，所以我们需要把当前内容全部删除，用git命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm -rf .</span><br></pre></td></tr></table></figure></p>
-<h3 id="提交分支"><a href="#提交分支" class="headerlink" title="提交分支"></a>提交分支</h3><p>使用commit命令来提交分支<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -am <span class="string">"new branch for documentation"</span></span><br></pre></td></tr></table></figure></p>
-<p>如果没有任何文件提交的话，分支是看不到的，可以创建一个新文件后再次提交则新创建的branch就会显示出来。<br>使用branch来查看分支是否创建成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch <span class="_">-a</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="OS-X"><a href="#OS-X" class="headerlink" title="OS X"></a>OS X</h2><p>如果你使用<a href="http://brew.sh/#install" target="_blank" rel="external">homebrew</a>作为你的包管理器，你可以通过它来安装Consul：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew cask install consul</span><br></pre></td></tr></table></figure></p>
+<p>如果没有<a href="http://caskroom.io/" target="_blank" rel="external">cask plugin</a>，那你可以通过下面命令安装：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install caskroom/cask/brew-cask</span><br></pre></td></tr></table></figure></p>
+<h2 id="验证安装"><a href="#验证安装" class="headerlink" title="验证安装"></a>验证安装</h2><p>安装Consul后，通过打开新的终端回话并且输入<em>consul</em>是否可用来验证安装是否工作。通过执行<em>consul</em>你应该可以看到下面类似的输出：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ consul</span><br><span class="line">usage: consul [--version] [--help] &lt;<span class="built_in">command</span>&gt; [&lt;args&gt;]</span><br><span class="line"></span><br><span class="line">Available commands are:</span><br><span class="line">    agent          Runs a Consul agent</span><br><span class="line">    event          Fire a new event</span><br><span class="line">    <span class="built_in">exec</span>           Executes a <span class="built_in">command</span> on Consul nodes</span><br><span class="line">    force-leave    Forces a member of the cluster to enter the <span class="string">"left"</span> state</span><br><span class="line">    info           Provides debugging information <span class="keyword">for</span> operators</span><br><span class="line">    join           Tell Consul agent to join cluster</span><br><span class="line">    keygen         Generates a new encryption key</span><br><span class="line">    leave          Gracefully leaves the Consul cluster and shuts down</span><br><span class="line">    members        Lists the members of a Consul cluster</span><br><span class="line">    monitor        Stream logs from a Consul agent</span><br><span class="line">    reload         Triggers the agent to reload configuration files</span><br><span class="line">    version        Prints the Consul version</span><br><span class="line">    watch          Watch <span class="keyword">for</span> changes <span class="keyword">in</span> Consul</span><br></pre></td></tr></table></figure></p>
+<p>如果终端报告<em>consul</em>没有被找到的错误，那可能是你的<em>PATH</em>没有被正确的设置导致的。请会到前面的步骤去检查你的<em>PATH</em>环境变量是否包含了安装Consul目录。</p>
+<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>Consul已经安装完成，让我们来启动代理!</p>
+<p>翻译自<a href="https://www.consul.io/intro/getting-started/install.html" target="_blank" rel="external">这里</a></p>
 
       
     </div>
@@ -345,7 +350,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/GIT/" rel="tag">#GIT</a>
+            <a href="/tags/Consul/" rel="tag">#Consul</a>
+          
+            <a href="/tags/MicroService/" rel="tag">#MicroService</a>
           
         </div>
       
@@ -354,13 +361,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/04/14/Get-class-info-from-APT/" rel="next" title="从APT中获取运行时类信息">
+                <i class="fa fa-chevron-left"></i> 从APT中获取运行时类信息
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/04/14/Get-class-info-from-APT/" rel="prev" title="从APT中获取运行时类信息">
-                从APT中获取运行时类信息 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -386,8 +393,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/04/13/Create-empty-branch-in-GIT/"
-           data-title="在GIT中创建一个空分支" data-url="http://yoursite.com/2016/04/13/Create-empty-branch-in-GIT/">
+      <div class="ds-thread" data-thread-key="2016/04/25/Consul-Getting-Started-01-Install-Consul/"
+           data-title="安装Consul" data-url="http://yoursite.com/2016/04/25/Consul-Getting-Started-01-Install-Consul/">
       </div>
     
   </div>
@@ -516,7 +523,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方法"><span class="nav-number">2.</span> <span class="nav-text">解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建分支"><span class="nav-number">2.1.</span> <span class="nav-text">创建分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除所有内容"><span class="nav-number">2.2.</span> <span class="nav-text">删除所有内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提交分支"><span class="nav-number">2.3.</span> <span class="nav-text">提交分支</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Consul"><span class="nav-number">1.</span> <span class="nav-text">安装Consul</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OS-X"><span class="nav-number">2.</span> <span class="nav-text">OS X</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证安装"><span class="nav-number">3.</span> <span class="nav-text">验证安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下一步"><span class="nav-number">4.</span> <span class="nav-text">下一步</span></a></li></ol></div>
             
           </div>
         </section>

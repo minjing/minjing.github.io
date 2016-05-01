@@ -64,7 +64,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="GIT," />
+  <meta name="keywords" content="Consul,MicroService," />
 
 
 
@@ -82,16 +82,25 @@
 
 
 
-<meta name="description" content="问题描述有时候我们需要在GIT里面创建一个空分支，该分支不继承任何提交，没有父节点，完全是一个干净的分支，例如我们需要在某个分支里存放项目文档。使用传统的git checkout命令创建的分支是有父节点的，意味着新branch包含了历史提交，所以我们无法直接使用该命令。">
+<meta name="description" content="我们已经看到了运行Consul，增加节点和服务，以及查询这些贱点和服务是多么地简单。在这篇教程中，我们将继续增加对节点和服务健康监测的教程。健康监测对服务发现是一个关键的组件，它避免使用不健康的服务。
+本篇的步骤基于前一篇 Consul集群，这里你应该运行有两个节点的集群。
+定义检测类似于服务，可以通过一个 检测定义或者通过调用HTTP API来注册一个检测。
+我们将使用检测定义的方法，因为就像服">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在GIT中创建一个空分支">
-<meta property="og:url" content="http://yoursite.com/2016/04/13/Create-empty-branch-in-GIT/index.html">
+<meta property="og:title" content="健康检测">
+<meta property="og:url" content="http://yoursite.com/2016/05/01/Consul-Getting-Started-05-Health-Checks/index.html">
 <meta property="og:site_name" content="Min's Blog">
-<meta property="og:description" content="问题描述有时候我们需要在GIT里面创建一个空分支，该分支不继承任何提交，没有父节点，完全是一个干净的分支，例如我们需要在某个分支里存放项目文档。使用传统的git checkout命令创建的分支是有父节点的，意味着新branch包含了历史提交，所以我们无法直接使用该命令。">
-<meta property="og:updated_time" content="2016-04-15T01:32:29.000Z">
+<meta property="og:description" content="我们已经看到了运行Consul，增加节点和服务，以及查询这些贱点和服务是多么地简单。在这篇教程中，我们将继续增加对节点和服务健康监测的教程。健康监测对服务发现是一个关键的组件，它避免使用不健康的服务。
+本篇的步骤基于前一篇 Consul集群，这里你应该运行有两个节点的集群。
+定义检测类似于服务，可以通过一个 检测定义或者通过调用HTTP API来注册一个检测。
+我们将使用检测定义的方法，因为就像服">
+<meta property="og:updated_time" content="2016-05-01T04:55:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在GIT中创建一个空分支">
-<meta name="twitter:description" content="问题描述有时候我们需要在GIT里面创建一个空分支，该分支不继承任何提交，没有父节点，完全是一个干净的分支，例如我们需要在某个分支里存放项目文档。使用传统的git checkout命令创建的分支是有父节点的，意味着新branch包含了历史提交，所以我们无法直接使用该命令。">
+<meta name="twitter:title" content="健康检测">
+<meta name="twitter:description" content="我们已经看到了运行Consul，增加节点和服务，以及查询这些贱点和服务是多么地简单。在这篇教程中，我们将继续增加对节点和服务健康监测的教程。健康监测对服务发现是一个关键的组件，它避免使用不健康的服务。
+本篇的步骤基于前一篇 Consul集群，这里你应该运行有两个节点的集群。
+定义检测类似于服务，可以通过一个 检测定义或者通过调用HTTP API来注册一个检测。
+我们将使用检测定义的方法，因为就像服">
 
 
 
@@ -109,7 +118,7 @@
   };
 </script>
 
-  <title> 在GIT中创建一个空分支 | Min's Blog </title>
+  <title> 健康检测 | Min's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -249,7 +258,7 @@
             
             
               
-                在GIT中创建一个空分支
+                健康检测
               
             
           </h1>
@@ -261,8 +270,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-13T15:18:50+08:00" content="2016-04-13">
-              2016-04-13
+            <time itemprop="dateCreated" datetime="2016-05-01T11:45:00+08:00" content="2016-05-01">
+              2016-05-01
             </time>
           </span>
 
@@ -291,8 +300,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/13/Create-empty-branch-in-GIT/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/13/Create-empty-branch-in-GIT/" itemprop="commentsCount"></span>
+                <a href="/2016/05/01/Consul-Getting-Started-05-Health-Checks/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/01/Consul-Getting-Started-05-Health-Checks/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -314,17 +323,23 @@
       
 
       
-        <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>有时候我们需要在GIT里面创建一个空分支，该分支不继承任何提交，没有父节点，完全是一个干净的分支，例如我们需要在某个分支里存放项目文档。<br>使用传统的git checkout命令创建的分支是有父节点的，意味着新branch包含了历史提交，所以我们无法直接使用该命令。</p>
+        <p>我们已经看到了运行Consul，增加节点和服务，以及查询这些贱点和服务是多么地简单。在这篇教程中，我们将继续增加对节点和服务健康监测的教程。健康监测对服务发现是一个关键的组件，它避免使用不健康的服务。</p>
+<p>本篇的步骤基于前一篇 <em>Consul集群</em>，这里你应该运行有两个节点的集群。</p>
+<h2 id="定义检测"><a href="#定义检测" class="headerlink" title="定义检测"></a>定义检测</h2><p>类似于服务，可以通过一个 <a href="https://www.consul.io/docs/agent/checks.html" target="_blank" rel="external">检测定义</a>或者通过调用HTTP API来注册一个检测。</p>
+<p>我们将使用检测定义的方法，因为就像服务一样，使用定义是一个最为常用的方法来设置检测。</p>
 <a id="more"></a>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><h3 id="创建分支"><a href="#创建分支" class="headerlink" title="创建分支"></a>创建分支</h3><p>使用 git checkout的–orphan参数:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout --orphan doc</span><br></pre></td></tr></table></figure></p>
-<p>该命令会创建一个名为doc的分支，并且该分支下有前一个分支下的所有文件。<br>查看–orphan的帮助：</p>
-<blockquote>
-<p>Create a new orphan branch, named <new_branch>, started from <start point=""> and switch to it. The first commit made on the new branch will have no parents and it will be the root of a new history totally disconnected from all the other branchs and commits.</start></new_branch></p>
-</blockquote>
-<p>这里的start point指的是你执行git checkout命令时的那个分支，当然新的分支不会指向任何以前的提交，就是它没有历史，如果你提交当前内容，那么这次提交就是这个分支的首次提交。</p>
-<h3 id="删除所有内容"><a href="#删除所有内容" class="headerlink" title="删除所有内容"></a>删除所有内容</h3><p>我们不想提交任何内容，所以我们需要把当前内容全部删除，用git命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm -rf .</span><br></pre></td></tr></table></figure></p>
-<h3 id="提交分支"><a href="#提交分支" class="headerlink" title="提交分支"></a>提交分支</h3><p>使用commit命令来提交分支<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -am <span class="string">"new branch for documentation"</span></span><br></pre></td></tr></table></figure></p>
-<p>如果没有任何文件提交的话，分支是看不到的，可以创建一个新文件后再次提交则新创建的branch就会显示出来。<br>使用branch来查看分支是否创建成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch <span class="_">-a</span></span><br></pre></td></tr></table></figure></p>
+<p>在第二个节点的Consul配置目录中创建两个定义文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vagrant@n2:~$ <span class="built_in">echo</span> <span class="string">'&#123;"check": &#123;"name": "ping",</span><br><span class="line">  "script": "ping -c1 google.com &gt;/dev/null", "interval": "30s"&#125;&#125;'</span> \</span><br><span class="line">  &gt;/etc/consul.d/ping.json</span><br><span class="line"></span><br><span class="line">vagrant@n2:~$ <span class="built_in">echo</span> <span class="string">'&#123;"service": &#123;"name": "web", "tags": ["rails"], "port": 80,</span><br><span class="line">  "check": &#123;"script": "curl localhost &gt;/dev/null 2&gt;&amp;1", "interval": "10s"&#125;&#125;&#125;'</span> \</span><br><span class="line">  &gt;/etc/consul.d/web.json</span><br></pre></td></tr></table></figure>
+<p>第一个定义增加了一个主机级别的检测，名为”ping”。该检测每30秒间隔运行一次，调用命令 <em>ping -c1 google.com</em>。在一个基于脚本的健康检测中，该检测使用启动Consul进程的用户来启动该检测。如果检测命令返回一个非0的返回码，那么该节点将被标记为不健康。这就是任何基于 <em>脚本</em> 的健康检测的契约。</p>
+<p>第二个命令修改名为 <em>web</em> 的服务，增加了一个检测，该检测每10秒用curl发送一个请求来验证该web服务是否可用。就像基于主机的健康检测，如果脚本返回一个非0的返回码，那该服务将被标记为不健康。</p>
+<p>现在重启第二个代理或者向它发送一个 <em>SIGHUP</em> 信号。你会看到下列日志信息：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">==&gt; Starting Consul agent...</span><br><span class="line">...</span><br><span class="line">    [INFO] agent: Synced service <span class="string">'web'</span></span><br><span class="line">    [INFO] agent: Synced check <span class="string">'service:web'</span></span><br><span class="line">    [INFO] agent: Synced check <span class="string">'ping'</span></span><br><span class="line">    [WARN] Check <span class="string">'service:web'</span> is now critical</span><br></pre></td></tr></table></figure></p>
+<p>前面的几行指出该代理已经同步了新的定义。后面的几行指出了被检测的 <em>web</em> 服务被标记为危险。这是因为我们还没有实际运行一个web服务器，所以这个curl测试标记为失败了。</p>
+<h2 id="检测健康状态"><a href="#检测健康状态" class="headerlink" title="检测健康状态"></a>检测健康状态</h2><p>现在我们已经增加了一些检测，我们可以使用HTTP API来审查它们。首先，我们可以使用命令寻找任何失败的检测（注意，这个命了可以在任何节点上运行）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vagrant@n1:~$ curl http://localhost:8500/v1/health/state/critical</span><br><span class="line">[&#123;<span class="string">"Node"</span>:<span class="string">"agent-two"</span>,<span class="string">"CheckID"</span>:<span class="string">"service:web"</span>,<span class="string">"Name"</span>:<span class="string">"Service 'web' check"</span>,<span class="string">"Status"</span>:<span class="string">"critical"</span>,<span class="string">"Notes"</span>:<span class="string">""</span>,<span class="string">"ServiceID"</span>:<span class="string">"web"</span>,<span class="string">"ServiceName"</span>:<span class="string">"web"</span>&#125;]</span><br></pre></td></tr></table></figure></p>
+<p>我们可以看到现在只有一个检测，那是我们的 <em>web</em> 服务的检测，它被设置为危险状态。</p>
+<p>另外，我们可以尝试使用DNS查询web服务。Consul不会返回任何结果因为该服务是不健康的：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dig @127.0.0.1 -p 8600 web.service.consul</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;web.service.consul.        IN  A</span><br></pre></td></tr></table></figure></p>
+<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>在本篇教程中，你学会了增加健康检测是非常容易。通过更新配置文件并且发送一个 <em>SIGHUP</em> 信号给代理来更新检测定义。还可以选择使用HTTP API来动态地增加，删除，以及修改检测。该API也可以用于一个”dead man’s switch”，一个<a href="https://www.consul.io/docs/agent/checks.html#TTL" target="_blank" rel="external">TTL-based check</a>。TTL检测可以被用于一个应用程序和Consul是紧密集成的，使得业务逻辑评估是基于健康检测的一部分。</p>
+<p>接下来，我们将浏览<a href="">Consul的键／值存储</a>。</p>
+<p>翻译自<a href="https://www.consul.io/intro/getting-started/checks.html" target="_blank" rel="external">这里</a></p>
 
       
     </div>
@@ -345,7 +360,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/GIT/" rel="tag">#GIT</a>
+            <a href="/tags/Consul/" rel="tag">#Consul</a>
+          
+            <a href="/tags/MicroService/" rel="tag">#MicroService</a>
           
         </div>
       
@@ -354,12 +371,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/05/01/Consul-Getting-Started-04-Consul-Cluster/" rel="next" title="Consul集群">
+                <i class="fa fa-chevron-left"></i> Consul集群
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/04/14/Get-class-info-from-APT/" rel="prev" title="从APT中获取运行时类信息">
-                从APT中获取运行时类信息 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/05/01/Consul-Getting-Started-06-KeyValue-Data/" rel="prev" title="键／值对数据">
+                键／值对数据 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -386,8 +407,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/04/13/Create-empty-branch-in-GIT/"
-           data-title="在GIT中创建一个空分支" data-url="http://yoursite.com/2016/04/13/Create-empty-branch-in-GIT/">
+      <div class="ds-thread" data-thread-key="2016/05/01/Consul-Getting-Started-05-Health-Checks/"
+           data-title="健康检测" data-url="http://yoursite.com/2016/05/01/Consul-Getting-Started-05-Health-Checks/">
       </div>
     
   </div>
@@ -516,7 +537,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方法"><span class="nav-number">2.</span> <span class="nav-text">解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建分支"><span class="nav-number">2.1.</span> <span class="nav-text">创建分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除所有内容"><span class="nav-number">2.2.</span> <span class="nav-text">删除所有内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提交分支"><span class="nav-number">2.3.</span> <span class="nav-text">提交分支</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义检测"><span class="nav-number">1.</span> <span class="nav-text">定义检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#检测健康状态"><span class="nav-number">2.</span> <span class="nav-text">检测健康状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下一步"><span class="nav-number">3.</span> <span class="nav-text">下一步</span></a></li></ol></div>
             
           </div>
         </section>

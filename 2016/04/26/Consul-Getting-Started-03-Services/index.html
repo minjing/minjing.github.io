@@ -94,7 +94,7 @@
 定义一个服务一个服务能够通过提供一个服务定义或者调用适当的HTTP API来注册。
 服务定义是最通用的注册服务方法，那么我们将使用这种方法来注册服务。我们将建构一个代理配置，前面的步骤已经描述过。
 首先，为Consul配置创建一个目录。Consul装载配置目录中所有的">
-<meta property="og:updated_time" content="2016-04-26T11:32:44.000Z">
+<meta property="og:updated_time" content="2016-05-01T03:29:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="注册服务">
 <meta name="twitter:description" content="在前面的步骤，我们运行了第一个代理，看到了集群的成员，并且查询了节点信息。在这篇指南里，我们将注册我们第一个服务并且查询这个服务。
@@ -345,6 +345,7 @@
 <h2 id="更新服务"><a href="#更新服务" class="headerlink" title="更新服务"></a>更新服务</h2><p>当配置文件修改后服务定义可以被更新，需要发送 <em>SIGHUP</em> 信号给代理。这可以让代理更新服务而无需停止代理或者让服务查询时服务不可用。</p>
 <p>可以选择HTTP API来动态地增加，删除，以及更改服务。</p>
 <h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>我们现在配置了一个单代理，并且注册了一个服务。进展非常不错，但是下一步我们会展示Consul里最有价值的特性，<a href="">设置我们第一个集群</a>!</p>
+<p>翻译自<a href="https://www.consul.io/intro/getting-started/services.html" target="_blank" rel="external">这里</a></p>
 
       
     </div>
@@ -383,6 +384,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/01/Consul-Getting-Started-04-Consul-Cluster/" rel="prev" title="Consul集群">
+                Consul集群 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -454,7 +459,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -471,7 +476,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

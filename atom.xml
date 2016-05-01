@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-05-01T06:05:00.000Z</updated>
+  <updated>2016-05-01T06:08:42.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>键／值对数据</title>
+    <title>Consul入门 － 键／值对数据</title>
     <link href="http://yoursite.com/2016/05/01/Consul-Getting-Started-06-KeyValue-Data/"/>
     <id>http://yoursite.com/2016/05/01/Consul-Getting-Started-06-KeyValue-Data/</id>
     <published>2016-05-01T05:15:00.000Z</published>
-    <updated>2016-05-01T06:05:00.000Z</updated>
+    <updated>2016-05-01T06:08:42.000Z</updated>
     
     <content type="html">&lt;p&gt;为了提供服务发现以及健康检测，Consul提供了非常容易使用的键／值对存储。它能被用于存储动态配置信息，帮助服务协作，建构leader选举机制，以及开发者可以想到的建构任何其它的东西。&lt;/p&gt;
 &lt;p&gt;本篇假设你至少有一个Consul代理在运行。&lt;/p&gt;
@@ -58,11 +58,11 @@
   </entry>
   
   <entry>
-    <title>健康检测</title>
+    <title>Consul入门 － 健康检测</title>
     <link href="http://yoursite.com/2016/05/01/Consul-Getting-Started-05-Health-Checks/"/>
     <id>http://yoursite.com/2016/05/01/Consul-Getting-Started-05-Health-Checks/</id>
     <published>2016-05-01T03:45:00.000Z</published>
-    <updated>2016-05-01T04:55:48.000Z</updated>
+    <updated>2016-05-01T06:08:36.000Z</updated>
     
     <content type="html">&lt;p&gt;我们已经看到了运行Consul，增加节点和服务，以及查询这些贱点和服务是多么地简单。在这篇教程中，我们将继续增加对节点和服务健康监测的教程。健康监测对服务发现是一个关键的组件，它避免使用不健康的服务。&lt;/p&gt;
 &lt;p&gt;本篇的步骤基于前一篇 &lt;em&gt;Consul集群&lt;/em&gt;，这里你应该运行有两个节点的集群。&lt;/p&gt;
@@ -102,11 +102,11 @@
   </entry>
   
   <entry>
-    <title>Consul集群</title>
+    <title>Consul入门 － Consul集群</title>
     <link href="http://yoursite.com/2016/05/01/Consul-Getting-Started-04-Consul-Cluster/"/>
     <id>http://yoursite.com/2016/05/01/Consul-Getting-Started-04-Consul-Cluster/</id>
     <published>2016-05-01T01:29:00.000Z</published>
-    <updated>2016-05-01T03:36:15.000Z</updated>
+    <updated>2016-05-01T06:08:31.000Z</updated>
     
     <content type="html">&lt;p&gt;我们已经启动了我们的第一个代理并且在这个代理上注册和查询了服务。这些显示了使用Consul是多么的容易但是并没有展示Consul的可扩展性以及可用于产品级别的服务发现的基础设施。在本篇向导中，我们将建立我们第一个多成员的真实的集群。&lt;/p&gt;
 &lt;p&gt;当一个Consul代理启动后，它对任何其他的节点都一无所知：它是个单独的隔离集群。为了让它感知其他的集群成员，代理必须加入一个现有的集群中去。为了加入一个现有的集群，它只需要知道一个单个的现有成员。它加入后，代理将广播该成员，并且快速发现集群中的其它成员。一个Consul代理能够加入任何其它的代理，不仅仅是那些运行在服务模式下的代理。&lt;/p&gt;
@@ -160,11 +160,11 @@
   </entry>
   
   <entry>
-    <title>注册服务</title>
+    <title>Consul入门 － 注册服务</title>
     <link href="http://yoursite.com/2016/04/26/Consul-Getting-Started-03-Services/"/>
     <id>http://yoursite.com/2016/04/26/Consul-Getting-Started-03-Services/</id>
     <published>2016-04-26T07:18:50.000Z</published>
-    <updated>2016-05-01T03:29:23.000Z</updated>
+    <updated>2016-05-01T06:08:21.000Z</updated>
     
     <content type="html">&lt;p&gt;在前面的步骤，我们运行了第一个代理，看到了集群的成员，并且查询了节点信息。在这篇指南里，我们将注册我们第一个服务并且查询这个服务。&lt;/p&gt;
 &lt;h2 id=&quot;定义一个服务&quot;&gt;&lt;a href=&quot;#定义一个服务&quot; class=&quot;headerlink&quot; title=&quot;定义一个服务&quot;&gt;&lt;/a&gt;定义一个服务&lt;/h2&gt;&lt;p&gt;一个服务能够通过提供一个&lt;a href=&quot;https://www.consul.io/docs/agent/services.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;服务定义&lt;/a&gt;或者调用适当的&lt;a href=&quot;https://www.consul.io/docs/agent/http.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;HTTP API&lt;/a&gt;来注册。&lt;/p&gt;
@@ -210,11 +210,11 @@
   </entry>
   
   <entry>
-    <title>运行Consul代理</title>
+    <title>Consul入门 － 运行Consul代理</title>
     <link href="http://yoursite.com/2016/04/25/Consul-Getting-Started-02-Run-The-Consul-Agent/"/>
     <id>http://yoursite.com/2016/04/25/Consul-Getting-Started-02-Run-The-Consul-Agent/</id>
     <published>2016-04-25T07:18:50.000Z</published>
-    <updated>2016-04-26T11:32:30.000Z</updated>
+    <updated>2016-05-01T06:07:59.000Z</updated>
     
     <content type="html">&lt;p&gt;在Consul安装完成后，必须先运行代理。该代理可以以服务器或者客户端模式运行。每个数据中心必须博阿含至少一个服务器，不过一个集群推荐3或5个服务器。一个单服务器的部署在失败的情况下会发生数据丢失因此不推荐使用。&lt;/p&gt;
 &lt;p&gt;所有其他的代理运行在客户端模式。一个客户端是一个非常轻量级的进程，它注册服务，运行健康检查，以及转发查询到服务器。代理必须运行在集群中的每个节点上。&lt;/p&gt;
@@ -254,11 +254,11 @@
   </entry>
   
   <entry>
-    <title>安装Consul</title>
+    <title>Consul入门 － 安装Consul</title>
     <link href="http://yoursite.com/2016/04/24/Consul-Getting-Started-01-Install-Consul/"/>
     <id>http://yoursite.com/2016/04/24/Consul-Getting-Started-01-Install-Consul/</id>
     <published>2016-04-24T07:18:50.000Z</published>
-    <updated>2016-04-26T11:32:33.000Z</updated>
+    <updated>2016-05-01T06:07:55.000Z</updated>
     
     <content type="html">&lt;p&gt;Consul必须首先安装在每个节点上当该节点需要称为Consul集群中的成员。为了使得安装更容易，Consul为所有支持的平台提供了二进制安装包。本页面不描述如何从源码来编译Consul。&lt;/p&gt;
 &lt;h2 id=&quot;安装Consul&quot;&gt;&lt;a href=&quot;#安装Consul&quot; class=&quot;headerlink&quot; title=&quot;安装Consul&quot;&gt;&lt;/a&gt;安装Consul&lt;/h2&gt;&lt;p&gt;为了安装Consul，需要在&lt;a href=&quot;https://www.consul.io/downloads.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;下载页面&lt;/a&gt;中找到和你系统匹配的包。Consul被打包成zip格式的压缩包。&lt;/p&gt;

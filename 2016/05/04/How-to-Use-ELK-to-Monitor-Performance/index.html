@@ -1,0 +1,709 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Elasticsearch,Logstash,Kibana,Docker,Collectl," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Min's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="每当我解决一些应用性能问题的时候，我常常会看到一个服务由于高的CPU利用率而使得一台或者多台服务器运行变得非常缓慢。这也许意味着它因为高负载而导致资源缺乏，但是通常情况下这其实是代码有bug，一个异常或者一个错误的流程导致过多占用了系统资源。为了把这些问题找出来，我不得不在NewRelic/Nagios和ELK之间查看信息。
+所以我确信我需要有一个单一的管理面板来查看从各个应用，操作系统以及网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使用ELK来监控性能">
+<meta property="og:url" content="http://yoursite.com/2016/05/04/How-to-Use-ELK-to-Monitor-Performance/index.html">
+<meta property="og:site_name" content="Min's Blog">
+<meta property="og:description" content="每当我解决一些应用性能问题的时候，我常常会看到一个服务由于高的CPU利用率而使得一台或者多台服务器运行变得非常缓慢。这也许意味着它因为高负载而导致资源缺乏，但是通常情况下这其实是代码有bug，一个异常或者一个错误的流程导致过多占用了系统资源。为了把这些问题找出来，我不得不在NewRelic/Nagios和ELK之间查看信息。
+所以我确信我需要有一个单一的管理面板来查看从各个应用，操作系统以及网络">
+<meta property="og:image" content="http://yoursite.com/images/elk-howto/Screen-Shot-2015-06-29-at-3.36.19-PM-1024x451.png">
+<meta property="og:image" content="http://yoursite.com/images/elk-howto/collectl-command-example-1024x317.png">
+<meta property="og:image" content="http://yoursite.com/images/elk-howto/kibana-example-1024x849.png">
+<meta property="og:updated_time" content="2016-05-05T13:58:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何使用ELK来监控性能">
+<meta name="twitter:description" content="每当我解决一些应用性能问题的时候，我常常会看到一个服务由于高的CPU利用率而使得一台或者多台服务器运行变得非常缓慢。这也许意味着它因为高负载而导致资源缺乏，但是通常情况下这其实是代码有bug，一个异常或者一个错误的流程导致过多占用了系统资源。为了把这些问题找出来，我不得不在NewRelic/Nagios和ELK之间查看信息。
+所以我确信我需要有一个单一的管理面板来查看从各个应用，操作系统以及网络">
+<meta name="twitter:image" content="http://yoursite.com/images/elk-howto/Screen-Shot-2015-06-29-at-3.36.19-PM-1024x451.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 如何使用ELK来监控性能 | Min's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Min's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-heartbeat fa-fw"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                如何使用ELK来监控性能
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-04T10:21:00+08:00" content="2016-05-04">
+              2016-05-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Development/" itemprop="url" rel="index">
+                    <span itemprop="name">Development</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/04/How-to-Use-ELK-to-Monitor-Performance/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/04/How-to-Use-ELK-to-Monitor-Performance/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/images/elk-howto/Screen-Shot-2015-06-29-at-3.36.19-PM-1024x451.png" alt="EKL GUI"></p>
+<p>每当我解决一些应用性能问题的时候，我常常会看到一个服务由于高的CPU利用率而使得一台或者多台服务器运行变得非常缓慢。这也许意味着它因为高负载而导致资源缺乏，但是通常情况下这其实是代码有bug，一个异常或者一个错误的流程导致过多占用了系统资源。为了把这些问题找出来，我不得不在NewRelic/Nagios和ELK之间查看信息。</p>
+<p>所以我确信我需要有一个单一的管理面板来查看从各个应用，操作系统以及网络设备上收集来的事件组合而成的性能指标</p>
+<p>为了使用ELK来监控你平台的性能，你需要集成一系列的工具。Probes是必须包含的组件，它运行在各个主机上用来收集各种系统性能指标。然后，采集的数据需要发送给Logstash，然后在Elasticsearch中进行聚集，最后由Kibana转换成图形。最终，软件服务操作组成员使用这些图形展示系统性能。在这篇文章中，我将分享我们如何建构我们的ELK软件栈来监控服务的性能。</p>
+<a id="more"></a>
+<h2 id="1-收集和传送"><a href="#1-收集和传送" class="headerlink" title="1. 收集和传送"></a>1. 收集和传送</h2><h3 id="收集"><a href="#收集" class="headerlink" title="收集"></a>收集</h3><p>在收集和传送数据到Logstash中的第一个步骤，我们使用一个名为 <a href="http://collectl.sourceforge.net/" target="_blank" rel="external">Collectl</a> 的工具。该工具来自于一个开源项目，它包含的大量的选项允许系统管理员从多个不同的IT系统中获取各种指标，并且运行保存这些数据供以后分析。我们使用它来生成，追踪，以及保存指标数据，例如网络吞吐量，CPU的磁盘IO等待时间，空闲的内存，以及CPU的空闲时间（指出过度/未充分使用计算机资源）。它也常被用于监控其他类型的系统资源，例如inode的使用以及打开的socket数量。</p>
+<p><em>Collectl命令输出样例</em><br><img src="/images/elk-howto/collectl-command-example-1024x317.png" alt="Collectl命令输出样例"></p>
+<p>最后，Collectl使用指定格式(in plot format)将采集的指标输出到一个日志文件中。该开源项目知道如何收集信息但是它并不会自动发送数据到ELK软件栈中。</p>
+<h3 id="使用一个Docker容器"><a href="#使用一个Docker容器" class="headerlink" title="使用一个Docker容器"></a>使用一个Docker容器</h3><p>我们把Collectl封装到了一个Docker容器中来获取一个Docker镜像，该镜像会包含了数据采集和数据发送的基本软件。我们使用版本4.0.0的Collectl以及下面提到的配置，这样可以避免一系列的问题：</p>
+<p>—— 为了避免数据在容器中过载，我们只保存了当天的数据。更久的数据都是维护在ELK软件栈中，因此你无需担心在容器的日志中保存所有的数据导致的问题。</p>
+<p>—— Collectl可以以指定的时间周期收集各种采样数据，当它会用不同的时间周期把数据持久到磁盘。这被称为刷新周期。如果数据每秒钟都被刷新到磁盘那么你可以得到近乎实时的数据。不过例如对于一个30秒的采集间隔，那么选择一个十分激进的采样周期不是必须的。一个输出格式化器会用于输出指定格式(a plot format)的输出，默认它会在每一行输出多个值，每个值用空格分开。</p>
+<p>Collectl配置文件看上去类似下面：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DaemonCommands = -f /var/log/collectl/performance-tab -r00:00,0 -F1 -s+YZ -oz -P --interval 30</span><br><span class="line">PQuery =   /usr/sbin/perfquery:/usr/bin/perfquery:/usr/local/ofed/bin/perfquery</span><br><span class="line">PCounter = /usr/mellanox/bin/get_pcounter</span><br><span class="line">VStat =    /usr/mellanox/bin/vstat:/usr/bin/vstat</span><br><span class="line">OfedInfo = /usr/bin/ofed_info:/usr/local/ofed/bin/ofed_info</span><br><span class="line">Resize=/usr/bin/resize:/usr/X11R6/bin/resize</span><br><span class="line">Ipmitool =  /usr/bin/ipmitool:/usr/local/bin/ipmitool:/opt/hptc/sbin/ipmitool</span><br><span class="line">IpmiCache = /var/run/collectl-ipmicache</span><br><span class="line">IpmiTypes = fan,temp,current</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用RSYSLOG"><a href="#使用RSYSLOG" class="headerlink" title="使用RSYSLOG"></a>使用RSYSLOG</h3><p><a href="http://www.rsyslog.com/" target="_blank" rel="external">RSYSLOG</a>是另一个容器组件。它用来从日志文件中提取数据，并且发送数据到ELK软件栈中。为了让Logstash专注于需要字段而不是所有的数据上，这里建议使用RSYSLOG在日志里增加一些元数据来对日志进行筛选。这里可以在数据发送前对指标进行过滤或者增加一些信息比如实例名称以及IP地址。附加上了时间戳后，这些信息可以被发送到Logstash。</p>
+<h3 id="一些注意点"><a href="#一些注意点" class="headerlink" title="一些注意点"></a>一些注意点</h3><p>在本步骤，有两个问题需要注意：</p>
+<p><em>1 - 时间戳：</em> 首先，Collectl并不在采集的数据中输出它的时间戳。因此如果你不同的主机运行在不同的时区，它们在你的ELK里面并不会对齐。为了解决这个问题，我们需要查询容器当前运行的时区，然后设置相应的时间戳。</p>
+<p><em>2 - 遵循Collectl日志文件名：</em> 另一个复杂的问题是Collectl输出数据到一个文件中，但是该文件名不是固定不变的。仅仅文件名的前缀是可以自定义的，然后Collectl自动在文件名上加上了当前日期。这个问题导致RSYSLOG不能通过文件名来监视文件，当日期切换时文件名也会改变。我们可以用最新版本的RSYSLOG —— 版本8来解决它，但是这里我假设大多数用户还没有用上这个版本。我们创建了一个很小的脚本，它调用了老版本的RSYSLOG，该脚本在容器里运行了一个定时的任务，该任务会链接一个指定的名称的文件名到一个固定的日志文件名上。然后SYSLOG只中那个固定日志文件中提取数据，即便该文件链接的目标文件改变了也没有关系。这就像一个指针，它在一定的时间下总是指向正确的Collectl日志文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ModLoad</span> imfile</span><br><span class="line"><span class="variable">$InputFilePollInterval</span> 10</span><br><span class="line"><span class="variable">$PrivDropToGroup</span> adm</span><br><span class="line"><span class="variable">$WorkDirectory</span> /var/spool/rsyslog</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Logengine access file:</span></span><br><span class="line"><span class="variable">$InputFileName</span> /var/<span class="built_in">log</span>/collectl/daily.log</span><br><span class="line"><span class="variable">$InputFileTag</span> performance-tab:</span><br><span class="line"><span class="variable">$InputFileStateFile</span> <span class="built_in">stat</span>-performance</span><br><span class="line"><span class="variable">$InputFileSeverity</span> info</span><br><span class="line"><span class="variable">$InputFilePersistStateInterval</span> 20000</span><br><span class="line"><span class="variable">$InputRunFileMonitor</span></span><br><span class="line"> </span><br><span class="line"><span class="variable">$template</span> logzioPerformanceFormat,<span class="string">"[XXLOGZTOKENXX] &lt;%pri%&gt;%protocol-version% %timestamp:::date-rfc3339% XXHOSTNAMEXX %app-name% %procid% %msgid% [type=performance-tab instance=XXINSTANCTIDXX] XXOFSETXX %msg% XXUSERTAGXX\n"</span></span><br><span class="line"><span class="keyword">if</span> <span class="variable">$programname</span> == <span class="string">'performance-tab'</span> <span class="keyword">then</span> @@XXLISTENERXX;logzioPerformanceFormat</span><br></pre></td></tr></table></figure>
+<h3 id="容器检查清单"><a href="#容器检查清单" class="headerlink" title="容器检查清单"></a>容器检查清单</h3><p>— Collectl</p>
+<ul>
+<li>RSYSLOG</li>
+<li>链接Collectl输出文件的脚本</li>
+<li>脚本文件的配置</li>
+</ul>
+<p>上面用到的Docker镜像可以在DockerHub上拉取，链接： <a href="https://registry.hub.docker.com/u/logzio/logzio-perfagent/" target="_blank" rel="external">https://registry.hub.docker.com/u/logzio/logzio-perfagent/</a></p>
+<h2 id="2-解析数据"><a href="#2-解析数据" class="headerlink" title="2. 解析数据"></a>2. 解析数据</h2><p>在收集和装箱发送后，我们需要做数据的解析。Collectl返回的是未结构化的日志数据，它基本是由一系列的数字组成， Logstash Grok表达式使用这些数据来获取每个字段的名称和指定的值。</p>
+<p>Collectl的配置参数显示设置了一个特定的输出模式。RSYSLOG日志配置在发送的消息中的特定位置增加了时区的信息。如果你想同时使用了这两个配置，那Grok模式配置如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">%&#123;GREEDYDATA:zone_time&#125; %&#123;NUMBER:cpu__user_percent:int&#125; %&#123;NUMBER:cpu__nice_percent:int&#125;</span><br><span class="line">%&#123;NUMBER:cpu__sys_percent:int&#125; %&#123;NUMBER:cpu__wait_percent:int&#125; %&#123;NUMBER:cpu__irq_percent:int&#125;</span><br><span class="line">%&#123;NUMBER:cpu__soft_percent:int&#125; %&#123;NUMBER:cpu__steal_percent:int&#125;</span><br><span class="line">%&#123;NUMBER:cpu__idle_percent:int&#125; %&#123;NUMBER:cpu__totl_percent:int&#125; </span><br><span class="line">%&#123;NUMBER:cpu__guest_percent:int&#125; %&#123;NUMBER:cpu__guestN_percent:int&#125; </span><br><span class="line">%&#123;NUMBER:cpu__intrpt_sec:int&#125; %&#123;NUMBER:cpu__ctx_sec:int&#125; %&#123;NUMBER:cpu__proc_sec:int&#125; </span><br><span class="line">%&#123;NUMBER:cpu__proc__queue:int&#125; %&#123;NUMBER:cpu__proc__run:int&#125; %&#123;NUMBER:cpu__load__avg1:float&#125; </span><br><span class="line">%&#123;NUMBER:cpu__load__avg5:float&#125; %&#123;NUMBER:cpu__load__avg15:float&#125; %&#123;NUMBER:cpu__run_tot:int&#125; </span><br><span class="line">%&#123;NUMBER:cpu__blk_tot:int&#125; %&#123;NUMBER:mem__tot:int&#125; %&#123;NUMBER:mem__used:int&#125; </span><br><span class="line">%&#123;NUMBER:mem__free:int&#125; %&#123;NUMBER:mem__shared:int&#125; %&#123;NUMBER:mem__buf:int&#125; </span><br><span class="line">%&#123;NUMBER:mem__cached:int&#125; %&#123;NUMBER:mem__slab:int&#125; %&#123;NUMBER:mem__map:int&#125; </span><br><span class="line">%&#123;NUMBER:mem__anon:int&#125; %&#123;NUMBER:mem__commit:int&#125; %&#123;NUMBER:mem__locked:int&#125; </span><br><span class="line">%&#123;NUMBER:mem__swap__tot:int&#125; %&#123;NUMBER:mem__swap__used:int&#125; %&#123;NUMBER:mem__swap__free:int&#125; </span><br><span class="line">%&#123;NUMBER:mem__swap__in:int&#125; %&#123;NUMBER:mem__swap__out:int&#125; %&#123;NUMBER:mem__dirty:int&#125; </span><br><span class="line">%&#123;NUMBER:mem__clean:int&#125; %&#123;NUMBER:mem__laundry:int&#125; %&#123;NUMBER:mem__inactive:int&#125; </span><br><span class="line">%&#123;NUMBER:mem__page__in:int&#125; %&#123;NUMBER:mem__page__out:int&#125; %&#123;NUMBER:mem__page__faults:int&#125; </span><br><span class="line">%&#123;NUMBER:mem__page__maj_faults:int&#125; %&#123;NUMBER:mem__huge__total:int&#125; </span><br><span class="line">%&#123;NUMBER:mem__huge__free:int&#125; %&#123;NUMBER:mem__huge__reserved:int&#125; </span><br><span class="line">%&#123;NUMBER:mem__s_unreclaim:int&#125; %&#123;NUMBER:sock__used:int&#125; %&#123;NUMBER:sock__tcp:int&#125; </span><br><span class="line">%&#123;NUMBER:sock__orph:int&#125; %&#123;NUMBER:sock__tw:int&#125; %&#123;NUMBER:sock__alloc:int&#125; </span><br><span class="line">%&#123;NUMBER:sock__mem:int&#125; %&#123;NUMBER:sock__udp:int&#125; %&#123;NUMBER:sock__raw:int&#125; </span><br><span class="line">%&#123;NUMBER:sock__frag:int&#125; %&#123;NUMBER:sock__frag_mem:int&#125; %&#123;NUMBER:net__rx_pkt_tot:int&#125; </span><br><span class="line">%&#123;NUMBER:net__tx_pkt_tot:int&#125; %&#123;NUMBER:net__rx_kb_tot:int&#125; %&#123;NUMBER:net__tx_kb_tot:int&#125; </span><br><span class="line">%&#123;NUMBER:net__rx_cmp_tot:int&#125; %&#123;NUMBER:net__rx_mlt_tot:int&#125; %&#123;NUMBER:net__tx_cmp_tot:int&#125; </span><br><span class="line">%&#123;NUMBER:net__rx_errs_tot:int&#125; %&#123;NUMBER:net__tx_errs_tot:int&#125; %&#123;NUMBER:dsk__read__tot:int&#125; </span><br><span class="line">%&#123;NUMBER:dsk__write__tot:int&#125; %&#123;NUMBER:dsk__ops__tot:int&#125; %&#123;NUMBER:dsk__read__kb_tot:int&#125; </span><br><span class="line">%&#123;NUMBER:dsk__write__kb_tot:int&#125; %&#123;NUMBER:dsk__kb__tot:int&#125; %&#123;NUMBER:dsk__read__mrg_tot:int&#125; %&#123;NUMBER:dsk__write__mrg_tot:int&#125; %&#123;NUMBER:dsk__mrg__tot:int&#125; %&#123;NUMBER:inode__numDentry:int&#125; %&#123;NUMBER:inode__openfiles:int&#125; %&#123;NUMBER:inode__max_file_percent:int&#125; </span><br><span class="line">%&#123;NUMBER:inode__used:int&#125; %&#123;NUMBER:nfs__reads_s:int&#125; %&#123;NUMBER:nfs__writes_s:int&#125; </span><br><span class="line">%&#123;NUMBER:nfs__meta_s:int&#125; %&#123;NUMBER:nfs__commit_s:int&#125; %&#123;NUMBER:nfs__udp:int&#125; </span><br><span class="line">%&#123;NUMBER:nfs__tcp:int&#125; %&#123;NUMBER:nfs__tcp_conn:int&#125; %&#123;NUMBER:nfs__bad_auth:int&#125; </span><br><span class="line">%&#123;NUMBER:nfs__bad_client:int&#125; %&#123;NUMBER:nfs__reads_c:int&#125; %&#123;NUMBER:nfs__writes_c:int&#125; </span><br><span class="line">%&#123;NUMBER:nfs__meta_c:int&#125; %&#123;NUMBER:nfs__commit_c:int&#125; %&#123;NUMBER:nfs__retrans:int&#125; </span><br><span class="line">%&#123;NUMBER:nfs__authref:int&#125; %&#123;NUMBER:tcp__ip_err:int&#125; %&#123;NUMBER:tcp__tcp_err:int&#125; </span><br><span class="line">%&#123;NUMBER:tcp__udp_err:int&#125; %&#123;NUMBER:tcp__icmp_err:int&#125; %&#123;NUMBER:tcp__loss:int&#125; </span><br><span class="line">%&#123;NUMBER:tcp__f_trans:int&#125; %&#123;NUMBER:buddy__page_1:int&#125; %&#123;NUMBER:buddy__page_2:int&#125; </span><br><span class="line">%&#123;NUMBER:buddy__page_4:int&#125; %&#123;NUMBER:buddy__page_8:int&#125; %&#123;NUMBER:buddy__page_16:int&#125; </span><br><span class="line">%&#123;NUMBER:buddy__page_32:int&#125; %&#123;NUMBER:buddy__page_64:int&#125; %&#123;NUMBER:buddy__page_128:int&#125; </span><br><span class="line">%&#123;NUMBER:buddy__page_256:int&#125; %&#123;NUMBER:buddy__page_512:int&#125; %&#123;NUMBER:buddy__page_1024:int&#125;?( </span><br><span class="line">%&#123;GREEDYDATA:user_tag&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="3-可视化"><a href="#3-可视化" class="headerlink" title="3. 可视化"></a>3. 可视化</h2><p>如果你运行了一个快速的ELK软件栈，那你会几乎同时得到这些数据的展示。显然这依赖于你安装的ELK的性能，不过你可以预期会在半分钟之内得到结果 - 一个最新的数据流的信息。</p>
+<p>在Logz.io，我们有一些预定义的报警和仪表板来展示性能指标，它们都是使用Collectl。如果你也使用Logz.io服务，请在聊天室里找到我们，我们将会分享这些有用的信息。</p>
+<p><img src="/images/elk-howto/kibana-example-1024x849.png" alt="kibana example"></p>
+<p>如果你想了解更多，请随意在下面留言！</p>
+<p>翻译自<a href="http://logz.io/blog/elk-monitor-platform-performance/?utm_source=devops.com&amp;utm_medium=referral&amp;utm_content=9_open_source_devops_tools&amp;utm_campaign=contributed_article" target="_blank" rel="external">这里</a></p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Elasticsearch/" rel="tag">#Elasticsearch</a>
+          
+            <a href="/tags/Logstash/" rel="tag">#Logstash</a>
+          
+            <a href="/tags/Kibana/" rel="tag">#Kibana</a>
+          
+            <a href="/tags/Docker/" rel="tag">#Docker</a>
+          
+            <a href="/tags/Collectl/" rel="tag">#Collectl</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/01/Consul-Getting-Started-06-KeyValue-Data/" rel="next" title="Consul入门06 － 键／值对数据">
+                <i class="fa fa-chevron-left"></i> Consul入门06 － 键／值对数据
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/04/How-to-Use-ELK-to-Monitor-Performance/"
+           data-title="如何使用ELK来监控性能" data-url="http://yoursite.com/2016/05/04/How-to-Use-ELK-to-Monitor-Performance/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Min" />
+          <p class="site-author-name" itemprop="name">Min</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/minjing" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1988931600" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/minjing" target="_blank">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  SF
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-收集和传送"><span class="nav-number">1.</span> <span class="nav-text">1. 收集和传送</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#收集"><span class="nav-number">1.1.</span> <span class="nav-text">收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用一个Docker容器"><span class="nav-number">1.2.</span> <span class="nav-text">使用一个Docker容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用RSYSLOG"><span class="nav-number">1.3.</span> <span class="nav-text">使用RSYSLOG</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些注意点"><span class="nav-number">1.4.</span> <span class="nav-text">一些注意点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器检查清单"><span class="nav-number">1.5.</span> <span class="nav-text">容器检查清单</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-解析数据"><span class="nav-number">2.</span> <span class="nav-text">2. 解析数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-可视化"><span class="nav-number">3.</span> <span class="nav-text">3. 可视化</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Min</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"minjing"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

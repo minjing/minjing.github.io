@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-05-05T13:58:21.000Z</updated>
+  <updated>2016-05-10T14:09:53.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Consul入门07 － Consul Web界面</title>
+    <link href="http://yoursite.com/2016/05/09/Consul-Getting-Started-07-Consul-Web-Ui/"/>
+    <id>http://yoursite.com/2016/05/09/Consul-Getting-Started-07-Consul-Web-Ui/</id>
+    <published>2016-05-09T07:13:00.000Z</published>
+    <updated>2016-05-10T14:09:53.000Z</updated>
+    
+    <content type="html">&lt;p&gt;Consul还带来了一个界面美观，功能强大的，开箱即用的Web界面。通过该界面我们可以查看所有的服务以及节点，查看所有的健康监测及其当前的状态，以及读取和设置键/值数据。该Web界面自动支持多数据中心。&lt;/p&gt;
+&lt;p&gt;有俩个方法来运行Web界面：使用&lt;a href=&quot;https://atlas.hashicorp.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Atlas by HashiCorp&lt;/a&gt;主机以及使用自有主机&lt;/p&gt;
+&lt;h2 id=&quot;使用Atlas主机&quot;&gt;&lt;a href=&quot;#使用Atlas主机&quot; class=&quot;headerlink&quot; title=&quot;使用Atlas主机&quot;&gt;&lt;/a&gt;使用Atlas主机&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/images/consul-getting-started/atlas_web_ui.png&quot; alt=&quot;atlas web ui&quot;&gt;&lt;/p&gt;
+&lt;p&gt;你必须在你的配置中增加两个字段来设置使用Atlas界面：&lt;a href=&quot;https://www.consul.io/docs/agent/options.html#_atlas&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;你Atlas infrastructure的名字&lt;/a&gt;以及&lt;a href=&quot;https://www.consul.io/docs/agent/options.html#_atlas_token&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;你的Atlas token&lt;/a&gt;。下面的例子就是在调用Consul代理的命令行中提供这些设置：&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ consul agent -atlas=ATLAS_USERNAME/demo -atlas-token=&lt;span class=&quot;string&quot;&gt;&quot;ATLAS_TOKEN&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;为了取得一个Atlas用户名和token，创建一个&lt;a href=&quot;https://atlas.hashicorp.com/account/new?utm_source=oss&amp;amp;utm_medium=getting-started-ui&amp;amp;utm_campaign=consul&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;账号&lt;/a&gt;并且在Consul配置中使用你的凭证值来替换这些上面各自的值。&lt;/p&gt;
+&lt;p&gt;你可以浏览&lt;a href=&quot;https://atlas.hashicorp.com/hashicorp/environments/consul-demo&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个&lt;/a&gt;在线演示。&lt;/p&gt;
+&lt;h2 id=&quot;采用自有主机&quot;&gt;&lt;a href=&quot;#采用自有主机&quot; class=&quot;headerlink&quot; title=&quot;采用自有主机&quot;&gt;&lt;/a&gt;采用自有主机&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/images/consul-getting-started/consul_web_ui.png&quot; alt=&quot;consul web ui&quot;&gt;&lt;/p&gt;
+&lt;p&gt;启动Consul代理并设置 &lt;em&gt;-ui&lt;/em&gt; 参数来启动自有主机的界面：&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ consul agent -ui&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;...&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;该界面被映射到 &lt;em&gt;/ui&lt;/em&gt; HTTP路径上，和HTTP API使用相同的端口。默认下就是 &lt;em&gt;&lt;a href=&quot;http://localhost:8500/ui&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://localhost:8500/ui&lt;/a&gt;&lt;/em&gt; 。&lt;/p&gt;
+&lt;p&gt;你可以在&lt;a href=&quot;http://demo.consul.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;浏览到Consul Web界面在线的演示。&lt;/p&gt;
+&lt;p&gt;这个在线演示可以访问素有数据中心的数据，我们也同样设计了几个特殊的数据中心用作演示：&lt;a href=&quot;http://ams2.demo.consul.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;AMS2&lt;/a&gt;(Amsterdam)，&lt;a href=&quot;http://sfo1.demo.consul.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;SFO1&lt;/a&gt;(San Francisco)，以及&lt;a href=&quot;http://nyc3.demo.consul.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;NYC3&lt;/a&gt;(New York)。&lt;/p&gt;
+&lt;h2 id=&quot;下一步&quot;&gt;&lt;a href=&quot;#下一步&quot; class=&quot;headerlink&quot; title=&quot;下一步&quot;&gt;&lt;/a&gt;下一步&lt;/h2&gt;&lt;p&gt;这是我们这篇入门指南的最后部分，浏览&lt;a href=&quot;https://www.consul.io/intro/getting-started/next-steps.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;下一步&lt;/a&gt;来学习更多关于如何在Consul里的知识！&lt;/p&gt;
+&lt;p&gt;翻译自&lt;a href=&quot;https://www.consul.io/intro/getting-started/ui.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Consul还带来了一个界面美观，功能强大的，开箱即用的Web界面。通过该界面我们可以查看所有的服务以及节点，查看所有的健康监测及其当前的状态，以及读取和设置键/值数据。该Web界面自动支持多数据中心。&lt;/p&gt;
+&lt;p&gt;有俩个方法来运行Web界面：使用&lt;a href=&quot;htt
+    
+    </summary>
+    
+      <category term="Development" scheme="http://yoursite.com/categories/Development/"/>
+    
+    
+      <category term="Consul" scheme="http://yoursite.com/tags/Consul/"/>
+    
+      <category term="MicroService" scheme="http://yoursite.com/tags/MicroService/"/>
+    
+  </entry>
   
   <entry>
     <title>如何使用ELK来监控性能</title>

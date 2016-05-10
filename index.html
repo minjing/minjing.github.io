@@ -251,6 +251,137 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/09/Consul-Getting-Started-07-Consul-Web-Ui/" itemprop="url">
+                  Consul入门07 － Consul Web界面
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-09T15:13:00+08:00" content="2016-05-09">
+              2016-05-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Development/" itemprop="url" rel="index">
+                    <span itemprop="name">Development</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/09/Consul-Getting-Started-07-Consul-Web-Ui/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/09/Consul-Getting-Started-07-Consul-Web-Ui/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Consul还带来了一个界面美观，功能强大的，开箱即用的Web界面。通过该界面我们可以查看所有的服务以及节点，查看所有的健康监测及其当前的状态，以及读取和设置键/值数据。该Web界面自动支持多数据中心。</p>
+<p>有俩个方法来运行Web界面：使用<a href="https://atlas.hashicorp.com/" target="_blank" rel="external">Atlas by HashiCorp</a>主机以及使用自有主机</p>
+<h2 id="使用Atlas主机"><a href="#使用Atlas主机" class="headerlink" title="使用Atlas主机"></a>使用Atlas主机</h2><p><img src="/images/consul-getting-started/atlas_web_ui.png" alt="atlas web ui"></p>
+<p>你必须在你的配置中增加两个字段来设置使用Atlas界面：<a href="https://www.consul.io/docs/agent/options.html#_atlas" target="_blank" rel="external">你Atlas infrastructure的名字</a>以及<a href="https://www.consul.io/docs/agent/options.html#_atlas_token" target="_blank" rel="external">你的Atlas token</a>。下面的例子就是在调用Consul代理的命令行中提供这些设置：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ consul agent -atlas=ATLAS_USERNAME/demo -atlas-token=<span class="string">"ATLAS_TOKEN"</span></span><br></pre></td></tr></table></figure></p>
+<p>为了取得一个Atlas用户名和token，创建一个<a href="https://atlas.hashicorp.com/account/new?utm_source=oss&amp;utm_medium=getting-started-ui&amp;utm_campaign=consul" target="_blank" rel="external">账号</a>并且在Consul配置中使用你的凭证值来替换这些上面各自的值。</p>
+<p>你可以浏览<a href="https://atlas.hashicorp.com/hashicorp/environments/consul-demo" target="_blank" rel="external">这个</a>在线演示。</p>
+<h2 id="采用自有主机"><a href="#采用自有主机" class="headerlink" title="采用自有主机"></a>采用自有主机</h2><p><img src="/images/consul-getting-started/consul_web_ui.png" alt="consul web ui"></p>
+<p>启动Consul代理并设置 <em>-ui</em> 参数来启动自有主机的界面：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ consul agent -ui</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>该界面被映射到 <em>/ui</em> HTTP路径上，和HTTP API使用相同的端口。默认下就是 <em><a href="http://localhost:8500/ui" target="_blank" rel="external">http://localhost:8500/ui</a></em> 。</p>
+<p>你可以在<a href="http://demo.consul.io/" target="_blank" rel="external">这里</a>浏览到Consul Web界面在线的演示。</p>
+<p>这个在线演示可以访问素有数据中心的数据，我们也同样设计了几个特殊的数据中心用作演示：<a href="http://ams2.demo.consul.io/" target="_blank" rel="external">AMS2</a>(Amsterdam)，<a href="http://sfo1.demo.consul.io/" target="_blank" rel="external">SFO1</a>(San Francisco)，以及<a href="http://nyc3.demo.consul.io/" target="_blank" rel="external">NYC3</a>(New York)。</p>
+<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>这是我们这篇入门指南的最后部分，浏览<a href="https://www.consul.io/intro/getting-started/next-steps.html" target="_blank" rel="external">下一步</a>来学习更多关于如何在Consul里的知识！</p>
+<p>翻译自<a href="https://www.consul.io/intro/getting-started/ui.html" target="_blank" rel="external">这里</a>。</p>
+
+          
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/04/How-to-Use-ELK-to-Monitor-Performance/" itemprop="url">
                   如何使用ELK来监控性能
                 </a>
@@ -1377,7 +1508,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

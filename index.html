@@ -251,6 +251,134 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/26/Electron-Guides-Quick-Start/" itemprop="url">
+                  Electron指南 - 快速入门
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-26T21:09:00+08:00" content="2016-05-26">
+              2016-05-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Development/" itemprop="url" rel="index">
+                    <span itemprop="name">Development</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/26/Electron-Guides-Quick-Start/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/26/Electron-Guides-Quick-Start/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><p>Electron提供了丰富的本地（操作系统）的API，使你能够使用纯JavaScript来创建桌面应用程序。与其它各种的Node.js运行时不同的是Electron专注于桌面应用程序而不是Web服务器。</p>
+<p>这并不意味着Electron是一个绑定图形用户界面（GUI）的JavaScript库。取而代之的是，Electron使用Web页面作为它的图形界面，所以你也可以将它看作是一个由JavaScript控制的迷你的Chrominum浏览器。</p>
+<h3 id="主进程"><a href="#主进程" class="headerlink" title="主进程"></a>主进程</h3><p>在Electron里，运行package.json里的main脚本的进程被称为 <em>主进程</em> ，运行在主进程里的脚本能够通过创建Web页面来显示GUI。</p>
+<h3 id="渲染进程"><a href="#渲染进程" class="headerlink" title="渲染进程"></a>渲染进程</h3><p>因为Electron使用Chrominum来显示Web页面，所以Chrominum的多进程架构也同样被使用。每个页面在Electron里是运行在自己的进程里，这些进程被称为 <em>渲染进程</em> 。<br>在浏览器里，Web页面通常运行在一个沙盒环境里，它不能访问本地的资源。但在Electron里，在Web页面中通过使用Node.js API可以进行底层的操作系统交互。</p>
+<h3 id="主进程与渲染进程的不同"><a href="#主进程与渲染进程的不同" class="headerlink" title="主进程与渲染进程的不同"></a>主进程与渲染进程的不同</h3><p>主进程通过构造 <em>BrowserWindow</em> 实例来创建Web页面。每个 <em>BrowserWindow</em> 实例在自己的渲染进程里运行Web页面。当一个 <em>BrowserWindow</em> 被销毁后，相应的渲染进程也同样被终止。</p>
+<p>主进程管理所有的Web页面以及相关的渲染进程。每个渲染进程都是互相隔离的，并且只知道运行在该进程里的Web页面。</p>
+<p>在Web页面里，调用本地GUI是不允许的，因为在Web页面里管理本地GUI资源是非常危险的而且非常容易导致资源泄露。如果你想在Web页面进行GUI操作，该Web页面的渲染进程必须通过和主进程通信来请求主进程处理这些操作。</p>
+<p>在Electron里，主进程和渲染进程有很多通信的方法。比如 <em>ipcRanderer</em> 和 <em>ipcMain</em> 模块是用来发送消息的，<em>remote</em> 模块支持RPC风格的通信。可以参考FAQ里的<a href="http://electron.atom.io/docs/faq/electron-faq#how-to-share-data-between-web-pages">如何在不同的Web页面里共享数据</a></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/26/Electron-Guides-Quick-Start/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/09/Consul-Getting-Started-07-Consul-Web-Ui/" itemprop="url">
                   Consul入门07 － Consul Web界面
                 </a>
@@ -1346,130 +1474,13 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/13/Create-empty-branch-in-GIT/" itemprop="url">
-                  在GIT中创建一个空分支
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-13T15:18:50+08:00" content="2016-04-13">
-              2016-04-13
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Development/" itemprop="url" rel="index">
-                    <span itemprop="name">Development</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/13/Create-empty-branch-in-GIT/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/13/Create-empty-branch-in-GIT/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>有时候我们需要在GIT里面创建一个空分支，该分支不继承任何提交，没有父节点，完全是一个干净的分支，例如我们需要在某个分支里存放项目文档。<br>使用传统的git checkout命令创建的分支是有父节点的，意味着新branch包含了历史提交，所以我们无法直接使用该命令。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/13/Create-empty-branch-in-GIT/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1508,7 +1519,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1525,7 +1536,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

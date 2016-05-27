@@ -1,0 +1,698 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Electron,NodeJs,JavaScript," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Min's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="快速入门Electron提供了丰富的本地（操作系统）的API，使你能够使用纯JavaScript来创建桌面应用程序。与其它各种的Node.js运行时不同的是Electron专注于桌面应用程序而不是Web服务器。
+这并不意味着Electron是一个绑定图形用户界面（GUI）的JavaScript库。取而代之的是，Electron使用Web页面作为它的图形界面，所以你也可以将它看作是一个由JavaSc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Electron指南 - 快速入门">
+<meta property="og:url" content="http://yoursite.com/2016/05/26/Electron-Guides-Quick-Start/index.html">
+<meta property="og:site_name" content="Min's Blog">
+<meta property="og:description" content="快速入门Electron提供了丰富的本地（操作系统）的API，使你能够使用纯JavaScript来创建桌面应用程序。与其它各种的Node.js运行时不同的是Electron专注于桌面应用程序而不是Web服务器。
+这并不意味着Electron是一个绑定图形用户界面（GUI）的JavaScript库。取而代之的是，Electron使用Web页面作为它的图形界面，所以你也可以将它看作是一个由JavaSc">
+<meta property="og:updated_time" content="2016-05-27T11:05:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Electron指南 - 快速入门">
+<meta name="twitter:description" content="快速入门Electron提供了丰富的本地（操作系统）的API，使你能够使用纯JavaScript来创建桌面应用程序。与其它各种的Node.js运行时不同的是Electron专注于桌面应用程序而不是Web服务器。
+这并不意味着Electron是一个绑定图形用户界面（GUI）的JavaScript库。取而代之的是，Electron使用Web页面作为它的图形界面，所以你也可以将它看作是一个由JavaSc">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Electron指南 - 快速入门 | Min's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Min's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-heartbeat fa-fw"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Electron指南 - 快速入门
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-26T21:09:00+08:00" content="2016-05-26">
+              2016-05-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Development/" itemprop="url" rel="index">
+                    <span itemprop="name">Development</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/26/Electron-Guides-Quick-Start/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/26/Electron-Guides-Quick-Start/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><p>Electron提供了丰富的本地（操作系统）的API，使你能够使用纯JavaScript来创建桌面应用程序。与其它各种的Node.js运行时不同的是Electron专注于桌面应用程序而不是Web服务器。</p>
+<p>这并不意味着Electron是一个绑定图形用户界面（GUI）的JavaScript库。取而代之的是，Electron使用Web页面作为它的图形界面，所以你也可以将它看作是一个由JavaScript控制的迷你的Chrominum浏览器。</p>
+<h3 id="主进程"><a href="#主进程" class="headerlink" title="主进程"></a>主进程</h3><p>在Electron里，运行package.json里的main脚本的进程被称为 <em>主进程</em> ，运行在主进程里的脚本能够通过创建Web页面来显示GUI。</p>
+<h3 id="渲染进程"><a href="#渲染进程" class="headerlink" title="渲染进程"></a>渲染进程</h3><p>因为Electron使用Chrominum来显示Web页面，所以Chrominum的多进程架构也同样被使用。每个页面在Electron里是运行在自己的进程里，这些进程被称为 <em>渲染进程</em> 。<br>在浏览器里，Web页面通常运行在一个沙盒环境里，它不能访问本地的资源。但在Electron里，在Web页面中通过使用Node.js API可以进行底层的操作系统交互。</p>
+<h3 id="主进程与渲染进程的不同"><a href="#主进程与渲染进程的不同" class="headerlink" title="主进程与渲染进程的不同"></a>主进程与渲染进程的不同</h3><p>主进程通过构造 <em>BrowserWindow</em> 实例来创建Web页面。每个 <em>BrowserWindow</em> 实例在自己的渲染进程里运行Web页面。当一个 <em>BrowserWindow</em> 被销毁后，相应的渲染进程也同样被终止。</p>
+<p>主进程管理所有的Web页面以及相关的渲染进程。每个渲染进程都是互相隔离的，并且只知道运行在该进程里的Web页面。</p>
+<p>在Web页面里，调用本地GUI是不允许的，因为在Web页面里管理本地GUI资源是非常危险的而且非常容易导致资源泄露。如果你想在Web页面进行GUI操作，该Web页面的渲染进程必须通过和主进程通信来请求主进程处理这些操作。</p>
+<p>在Electron里，主进程和渲染进程有很多通信的方法。比如 <em>ipcRanderer</em> 和 <em>ipcMain</em> 模块是用来发送消息的，<em>remote</em> 模块支持RPC风格的通信。可以参考FAQ里的<a href="http://electron.atom.io/docs/faq/electron-faq#how-to-share-data-between-web-pages" target="_blank" rel="external">如何在不同的Web页面里共享数据</a></p>
+<a id="more"></a>
+<h2 id="编写第一个Electron应用"><a href="#编写第一个Electron应用" class="headerlink" title="编写第一个Electron应用"></a>编写第一个Electron应用</h2><p>通常，一个Electron应用的结构类似下面：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">your-app/</span><br><span class="line">├── package.json</span><br><span class="line">├── main.js</span><br><span class="line">└── index.html</span><br></pre></td></tr></table></figure></p>
+<p><em>package.json</em> 的格式与Node的模块格式是一致的，其中 <em>main</em> 字段指定的脚本就是你应用的启动脚本，该脚本将运行在主进程中。你的 <em>package.json</em> 也许看上去像下面这个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span>    : <span class="string">"your-app"</span>,</span><br><span class="line">  <span class="string">"version"</span> : <span class="string">"0.1.0"</span>,</span><br><span class="line">  <span class="string">"main"</span>    : <span class="string">"main.js"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>注意</em> 如果在<em>package.json</em> 中的 <em>main</em> 字段没有指定，那么Electron将尝试装载一个名为 <em>index.js</em> 的脚本。</p>
+<p><em>main.js</em> 应当创建窗口并且处理系统事件，一个典型的例子如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> electron = <span class="built_in">require</span>(<span class="string">'electron'</span>);</span><br><span class="line"><span class="comment">// 控制应用生命周期的模块</span></span><br><span class="line"><span class="keyword">const</span> &#123;app&#125; = electron;</span><br><span class="line"><span class="comment">// 创建本地浏览器窗口的模块</span></span><br><span class="line"><span class="keyword">const</span> &#123;BrowserWindow&#125; = electron;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 指向窗口对象的一个全局引用，如果没有这个引用，那么当该javascript对象被垃圾回收的</span></span><br><span class="line"><span class="comment">// 时候该窗口将会自动关闭</span></span><br><span class="line"><span class="keyword">let</span> win;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createWindow</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 创建一个新的浏览器窗口</span></span><br><span class="line">  win = <span class="keyword">new</span> BrowserWindow(&#123;width: <span class="number">800</span>, height: <span class="number">600</span>&#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 并且装载应用的index.html页面</span></span><br><span class="line">  win.loadURL(<span class="string">`file://<span class="subst">$&#123;__dirname&#125;</span>/index.html`</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 打开开发工具页面</span></span><br><span class="line">  win.webContents.openDevTools();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 当窗口关闭时调用的方法</span></span><br><span class="line">  win.on(<span class="string">'closed'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 解除窗口对象的引用，通常而言如果应用支持多个窗口的话，你会在一个数组里</span></span><br><span class="line">    <span class="comment">// 存放窗口对象，在窗口关闭的时候应当删除相应的元素。</span></span><br><span class="line">    win = <span class="literal">null</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 当Electron完成初始化并且已经创建了浏览器窗口，则该方法将会被调用。</span></span><br><span class="line"><span class="comment">// 有些API只能在该事件发生后才能被使用。</span></span><br><span class="line">app.on(<span class="string">'ready'</span>, createWindow);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 当所有的窗口被关闭后退出应用</span></span><br><span class="line">app.on(<span class="string">'window-all-closed'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="comment">// 对于OS X系统，应用和相应的菜单栏会一直激活直到用户通过Cmd + Q显式退出</span></span><br><span class="line">  <span class="keyword">if</span> (process.platform !== <span class="string">'darwin'</span>) &#123;</span><br><span class="line">    app.quit();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.on(<span class="string">'activate'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="comment">// 对于OS X系统，当dock图标被点击后会重新创建一个app窗口，并且不会有其他</span></span><br><span class="line">  <span class="comment">// 窗口打开</span></span><br><span class="line">  <span class="keyword">if</span> (win === <span class="literal">null</span>) &#123;</span><br><span class="line">    createWindow();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在这个文件后面你可以直接包含你应用特定的由主进程运行的代码。</span></span><br><span class="line"><span class="comment">// 也可以把这些代码放在另一个文件中然后在这里导入。</span></span><br></pre></td></tr></table></figure>
+<p>最后 <em>index.html</em> 则是你想要展示在窗口中：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello World!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello World!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    We are using node <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="built_in">document</span>.write(process.versions.node)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>,</span><br><span class="line">    Chrome <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="built_in">document</span>.write(process.versions.chrome)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>,</span><br><span class="line">    and Electron <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="built_in">document</span>.write(process.versions.electron)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>.</span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">## 运行你的应用</span><br><span class="line"></span><br><span class="line">一旦你建立了你的 *main.js*, *index.html*, 以及 *package.json* 文件，你也许会想要尝试在本地运行应用来测试它，确保应用是按照你预期的方式工作。</span><br><span class="line"></span><br><span class="line">### electron-prebuilt</span><br><span class="line"></span><br><span class="line">*electron-prebuilt* 是一个 *npm* 的模块，它包含了一个预编译的Electron版本。</span><br><span class="line"></span><br><span class="line">如果你已经通过 *npm* 将该模块全局安装了，那么你只需要在你应用的源代码目录西下运行下面的命令：</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">electron .</span><br></pre></td></tr></table></figure>
+<p>如果你只是在本地安装了该模块，那么运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./node_modules/.bin/electron .</span><br></pre></td></tr></table></figure>
+<h3 id="手动下载Electron二进制包"><a href="#手动下载Electron二进制包" class="headerlink" title="手动下载Electron二进制包"></a>手动下载Electron二进制包</h3><p>如果手动下载了Electron二进制包，你可以通过执行其中包含的二进制文件来直接执行你的应用。</p>
+<h4 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ .\electron\electron.exe your-app\</span><br></pre></td></tr></table></figure>
+<p>Linux</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./electron/electron your-app/</span><br></pre></td></tr></table></figure>
+<p>OS X<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./Electron.app/Contents/MacOS/Electron your-app/</span><br></pre></td></tr></table></figure></p>
+<p>这里的 <em>Electron.app</em> 是Electron发布包的一部分，你可以在<a href="https://github.com/electron/electron/releases" target="_blank" rel="external">这里</a>下载。</p>
+<h3 id="运行发布"><a href="#运行发布" class="headerlink" title="运行发布"></a>运行发布</h3><p>在完成应用开发之后，你可以按照<a href="http://electron.atom.io/docs/tutorial/application-distribution" target="_blank" rel="external">应用发布</a>指导创建一个发布，然后执行打包的应用。</p>
+<h3 id="尝试例子"><a href="#尝试例子" class="headerlink" title="尝试例子"></a>尝试例子</h3><p>通过使用 <em>atom/electron-quick-start</em> 来克隆并且运行教程的代码。</p>
+<p><em>注意</em> 运行该例子需要在你的系统中安装<a href="https://git-scm.com/" target="_blank" rel="external">Git</a>以及<a href="https://nodejs.org/en/download/" target="_blank" rel="external">Node.js</a>（它也包含了<a href="https://npmjs.org/" target="_blank" rel="external">npm</a>)。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 克隆仓库</span></span><br><span class="line">$ git <span class="built_in">clone</span> https://github.com/electron/electron-quick-start</span><br><span class="line"><span class="comment"># 进入克隆的仓库</span></span><br><span class="line">$ <span class="built_in">cd</span> electron-quick-start</span><br><span class="line"><span class="comment"># 安装依赖然后运行应用</span></span><br><span class="line">$ npm install &amp;&amp; npm start</span><br></pre></td></tr></table></figure>
+<p>翻译自<a href="http://electron.atom.io/docs/tutorial/quick-start/" target="_blank" rel="external">这里</a></p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Electron/" rel="tag">#Electron</a>
+          
+            <a href="/tags/NodeJs/" rel="tag">#NodeJs</a>
+          
+            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/09/Consul-Getting-Started-07-Consul-Web-Ui/" rel="next" title="Consul入门07 － Consul Web界面">
+                <i class="fa fa-chevron-left"></i> Consul入门07 － Consul Web界面
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/26/Electron-Guides-Quick-Start/"
+           data-title="Electron指南 - 快速入门" data-url="http://yoursite.com/2016/05/26/Electron-Guides-Quick-Start/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Min" />
+          <p class="site-author-name" itemprop="name">Min</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/minjing" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1988931600" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/minjing" target="_blank">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  SF
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#快速入门"><span class="nav-number">1.</span> <span class="nav-text">快速入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主进程"><span class="nav-number">1.1.</span> <span class="nav-text">主进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#渲染进程"><span class="nav-number">1.2.</span> <span class="nav-text">渲染进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主进程与渲染进程的不同"><span class="nav-number">1.3.</span> <span class="nav-text">主进程与渲染进程的不同</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写第一个Electron应用"><span class="nav-number">2.</span> <span class="nav-text">编写第一个Electron应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#手动下载Electron二进制包"><span class="nav-number">2.1.</span> <span class="nav-text">手动下载Electron二进制包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Windows"><span class="nav-number">2.1.1.</span> <span class="nav-text">Windows</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行发布"><span class="nav-number">2.2.</span> <span class="nav-text">运行发布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尝试例子"><span class="nav-number">2.3.</span> <span class="nav-text">尝试例子</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Min</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"minjing"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

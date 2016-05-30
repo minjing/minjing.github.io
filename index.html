@@ -251,6 +251,154 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/30/Electron-Guides-Debugging-the-Main-Process/" itemprop="url">
+                  Electron指南 - 调试主进程
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-30T15:41:00+08:00" content="2016-05-30">
+              2016-05-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Development/" itemprop="url" rel="index">
+                    <span itemprop="name">Development</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/30/Electron-Guides-Debugging-the-Main-Process/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/30/Electron-Guides-Debugging-the-Main-Process/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="调试主进程"><a href="#调试主进程" class="headerlink" title="调试主进程"></a>调试主进程</h2><p>浏览器窗口的DevTools只能调试渲染进程的脚本（比如Web页面）。为了提供一种方法来调试主进程中的脚本，Electron提供了 <em>–debug</em> 以及 <em>–debug-brk</em> 的选项开关。</p>
+<h3 id="命令行开关"><a href="#命令行开关" class="headerlink" title="命令行开关"></a>命令行开关</h3><p>使用下列命令行切换到调试Electron的主进程模式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--debug=[port]</span><br></pre></td></tr></table></figure>
+<p>这个开关将使得Electron使用V8调试协议侦听在指定端口上。默认侦听端口是5858。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--debug-brk=[port]</span><br></pre></td></tr></table></figure>
+<p>类似于 <em>–debug</em> 但是这个开关将在脚本的第一行暂停执行。</p>
+<h3 id="使用node-inspector来调试"><a href="#使用node-inspector来调试" class="headerlink" title="使用node-inspector来调试"></a>使用node-inspector来调试</h3><p><em>注意：</em> 当前的Electron和node-inspector工作的不是非常好，并且当你在node-inspector的控制台检查 <em>process</em> 对象的时候主进程将会挂掉。</p>
+<ol>
+<li>确信安装了<a href="https://github.com/nodejs/node-gyp#installation" target="_blank" rel="external">node-gyp及其依赖的工具</a></li>
+<li><p>安装<a href="https://github.com/node-inspector/node-inspector" target="_blank" rel="external">node-inspector</a></p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install node-inspector</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装 <em>node-pre-gyp</em> 补丁</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install git+https://git@github.com/enlight/node-pre-gyp.git<span class="comment">#detect-electron-runtime-in-find</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重新编译 <em>node-inspector</em> <em>V8</em> 模块 (改变编译目标至你的Electron版本号)</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ node_modules/.bin/node-pre-gyp --target=0.36.11 --runtime=electron --fallback-to-build --directory node_modules/v8-debug/ --dist-url=https://atom.io/download/atom-shell reinstall</span><br><span class="line">$ node_modules/.bin/node-pre-gyp --target=0.36.11 --runtime=electron --fallback-to-build --directory node_modules/v8-profiler/ --dist-url=https://atom.io/download/atom-shell reinstall</span><br></pre></td></tr></table></figure>
+<p> 查阅<a href="http://electron.atom.io/docs/tutorial/using-native-node-modules#how-to-install-native-modules" target="_blank" rel="external">如何安装本地模块</a></p>
+</li>
+<li><p>打开Electron调试模式<br> 你可以使用一个debug标志来打开Electron，例如：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ electron --debug=5858 your/app</span><br><span class="line">```bash</span><br><span class="line">或在脚本第一行暂停</span><br><span class="line">```bash</span><br><span class="line">$ electron --debug-brk=5858 your/app</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用electron启动<a href="https://github.com/node-inspector/node-inspector" target="_blank" rel="external">node-inspector</a></p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ELECTRON_RUN_AS_NODE=<span class="literal">true</span> path/to/electron.exe node_modules/node-inspector/bin/inspector.js</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>装载调试器UI<br> 在Chrome浏览器中打开 <em><a href="http://127.0.0.1:8080/debug?ws=127.0.0.1:8080&amp;port=5858" target="_blank" rel="external">http://127.0.0.1:8080/debug?ws=127.0.0.1:8080&amp;port=5858</a></em>。 如果使用debug-brk来启动的话你必须点击暂停来看的看到完整的行。</p>
+</li>
+</ol>
+<p>本文翻译自[这里] (<a href="http://electron.atom.io/docs/tutorial/debugging-main-process/" target="_blank" rel="external">http://electron.atom.io/docs/tutorial/debugging-main-process/</a>)<br>未经授权，禁止转载。</p>
+<p>更多文章请浏览我的博客：<a href="http://minjing.github.io" target="_blank" rel="external">@gihub</a>, <a href="http://minjing.coding.me/" target="_blank" rel="external">@coding</a></p>
+
+          
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/26/Electron-Guides-Quick-Start/" itemprop="url">
                   Electron指南 - 快速入门
                 </a>
@@ -1352,128 +1500,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/14/Get-class-info-from-APT/" itemprop="url">
-                  从APT中获取运行时类信息
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-14T20:48:58+08:00" content="2016-04-14">
-              2016-04-14
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Development/" itemprop="url" rel="index">
-                    <span itemprop="name">Development</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/14/Get-class-info-from-APT/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/14/Get-class-info-from-APT/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>从JDK1.6开始提供了一个新的被称为APT(Annotation Processing Tool)的工具，使用其提供的APT我们可以通过类似数据结构的方式来访问被编译的Java的源代码。</p>
-<p>利用这个新的工具提供的API我们可以在编译Java源代码的同时对现有代码进行增强和生成代码，比之以往通过运行时的反射以及通过Java的动态代理或者运行时字节码修改来增强要来的更简单并且运行时的效率要更高（指启动时间）</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/14/Get-class-info-from-APT/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1519,7 +1545,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

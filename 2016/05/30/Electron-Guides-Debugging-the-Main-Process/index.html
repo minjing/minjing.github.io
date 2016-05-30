@@ -64,7 +64,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Consul,MicroService," />
+  <meta name="keywords" content="Electron,NodeJs,JavaScript," />
 
 
 
@@ -82,25 +82,28 @@
 
 
 
-<meta name="description" content="我们已经看到了运行Consul，增加节点和服务，以及查询这些贱点和服务是多么地简单。在这篇教程中，我们将继续增加对节点和服务健康监测的教程。健康监测对服务发现是一个关键的组件，它避免使用不健康的服务。
-本篇的步骤基于前一篇 Consul集群，这里你应该运行有两个节点的集群。
-定义检测类似于服务，可以通过一个 检测定义或者通过调用HTTP API来注册一个检测。
-我们将使用检测定义的方法，因为就像服">
+<meta name="description" content="调试主进程浏览器窗口的DevTools只能调试渲染进程的脚本（比如Web页面）。为了提供一种方法来调试主进程中的脚本，Electron提供了 –debug 以及 –debug-brk 的选项开关。
+命令行开关使用下列命令行切换到调试Electron的主进程模式：
+1--debug=[port]
+这个开关将使得Electron使用V8调试协议侦听在指定端口上。默认侦听端口是5858。
+1--debu">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Consul入门05 － 健康检测">
-<meta property="og:url" content="http://yoursite.com/2016/05/01/Consul-Getting-Started-05-Health-Checks/index.html">
+<meta property="og:title" content="Electron指南 - 调试主进程">
+<meta property="og:url" content="http://yoursite.com/2016/05/30/Electron-Guides-Debugging-the-Main-Process/index.html">
 <meta property="og:site_name" content="Min's Blog">
-<meta property="og:description" content="我们已经看到了运行Consul，增加节点和服务，以及查询这些贱点和服务是多么地简单。在这篇教程中，我们将继续增加对节点和服务健康监测的教程。健康监测对服务发现是一个关键的组件，它避免使用不健康的服务。
-本篇的步骤基于前一篇 Consul集群，这里你应该运行有两个节点的集群。
-定义检测类似于服务，可以通过一个 检测定义或者通过调用HTTP API来注册一个检测。
-我们将使用检测定义的方法，因为就像服">
-<meta property="og:updated_time" content="2016-05-01T06:10:25.000Z">
+<meta property="og:description" content="调试主进程浏览器窗口的DevTools只能调试渲染进程的脚本（比如Web页面）。为了提供一种方法来调试主进程中的脚本，Electron提供了 –debug 以及 –debug-brk 的选项开关。
+命令行开关使用下列命令行切换到调试Electron的主进程模式：
+1--debug=[port]
+这个开关将使得Electron使用V8调试协议侦听在指定端口上。默认侦听端口是5858。
+1--debu">
+<meta property="og:updated_time" content="2016-05-30T12:42:43.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Consul入门05 － 健康检测">
-<meta name="twitter:description" content="我们已经看到了运行Consul，增加节点和服务，以及查询这些贱点和服务是多么地简单。在这篇教程中，我们将继续增加对节点和服务健康监测的教程。健康监测对服务发现是一个关键的组件，它避免使用不健康的服务。
-本篇的步骤基于前一篇 Consul集群，这里你应该运行有两个节点的集群。
-定义检测类似于服务，可以通过一个 检测定义或者通过调用HTTP API来注册一个检测。
-我们将使用检测定义的方法，因为就像服">
+<meta name="twitter:title" content="Electron指南 - 调试主进程">
+<meta name="twitter:description" content="调试主进程浏览器窗口的DevTools只能调试渲染进程的脚本（比如Web页面）。为了提供一种方法来调试主进程中的脚本，Electron提供了 –debug 以及 –debug-brk 的选项开关。
+命令行开关使用下列命令行切换到调试Electron的主进程模式：
+1--debug=[port]
+这个开关将使得Electron使用V8调试协议侦听在指定端口上。默认侦听端口是5858。
+1--debu">
 
 
 
@@ -118,7 +121,7 @@
   };
 </script>
 
-  <title> Consul入门05 － 健康检测 | Min's Blog </title>
+  <title> Electron指南 - 调试主进程 | Min's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -258,7 +261,7 @@
             
             
               
-                Consul入门05 － 健康检测
+                Electron指南 - 调试主进程
               
             
           </h1>
@@ -270,8 +273,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-01T11:45:00+08:00" content="2016-05-01">
-              2016-05-01
+            <time itemprop="dateCreated" datetime="2016-05-30T15:41:00+08:00" content="2016-05-30">
+              2016-05-30
             </time>
           </span>
 
@@ -300,8 +303,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/01/Consul-Getting-Started-05-Health-Checks/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/01/Consul-Getting-Started-05-Health-Checks/" itemprop="commentsCount"></span>
+                <a href="/2016/05/30/Electron-Guides-Debugging-the-Main-Process/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/30/Electron-Guides-Debugging-the-Main-Process/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -323,23 +326,36 @@
       
 
       
-        <p>我们已经看到了运行Consul，增加节点和服务，以及查询这些贱点和服务是多么地简单。在这篇教程中，我们将继续增加对节点和服务健康监测的教程。健康监测对服务发现是一个关键的组件，它避免使用不健康的服务。</p>
-<p>本篇的步骤基于前一篇 <em>Consul集群</em>，这里你应该运行有两个节点的集群。</p>
-<h2 id="定义检测"><a href="#定义检测" class="headerlink" title="定义检测"></a>定义检测</h2><p>类似于服务，可以通过一个 <a href="https://www.consul.io/docs/agent/checks.html" target="_blank" rel="external">检测定义</a>或者通过调用HTTP API来注册一个检测。</p>
-<p>我们将使用检测定义的方法，因为就像服务一样，使用定义是一个最为常用的方法来设置检测。</p>
-<a id="more"></a>
-<p>在第二个节点的Consul配置目录中创建两个定义文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vagrant@n2:~$ <span class="built_in">echo</span> <span class="string">'&#123;"check": &#123;"name": "ping",</span><br><span class="line">  "script": "ping -c1 google.com &gt;/dev/null", "interval": "30s"&#125;&#125;'</span> \</span><br><span class="line">  &gt;/etc/consul.d/ping.json</span><br><span class="line"></span><br><span class="line">vagrant@n2:~$ <span class="built_in">echo</span> <span class="string">'&#123;"service": &#123;"name": "web", "tags": ["rails"], "port": 80,</span><br><span class="line">  "check": &#123;"script": "curl localhost &gt;/dev/null 2&gt;&amp;1", "interval": "10s"&#125;&#125;&#125;'</span> \</span><br><span class="line">  &gt;/etc/consul.d/web.json</span><br></pre></td></tr></table></figure>
-<p>第一个定义增加了一个主机级别的检测，名为”ping”。该检测每30秒间隔运行一次，调用命令 <em>ping -c1 google.com</em>。在一个基于脚本的健康检测中，该检测使用启动Consul进程的用户来启动该检测。如果检测命令返回一个非0的返回码，那么该节点将被标记为不健康。这就是任何基于 <em>脚本</em> 的健康检测的契约。</p>
-<p>第二个命令修改名为 <em>web</em> 的服务，增加了一个检测，该检测每10秒用curl发送一个请求来验证该web服务是否可用。就像基于主机的健康检测，如果脚本返回一个非0的返回码，那该服务将被标记为不健康。</p>
-<p>现在重启第二个代理或者向它发送一个 <em>SIGHUP</em> 信号。你会看到下列日志信息：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">==&gt; Starting Consul agent...</span><br><span class="line">...</span><br><span class="line">    [INFO] agent: Synced service <span class="string">'web'</span></span><br><span class="line">    [INFO] agent: Synced check <span class="string">'service:web'</span></span><br><span class="line">    [INFO] agent: Synced check <span class="string">'ping'</span></span><br><span class="line">    [WARN] Check <span class="string">'service:web'</span> is now critical</span><br></pre></td></tr></table></figure></p>
-<p>前面的几行指出该代理已经同步了新的定义。后面的几行指出了被检测的 <em>web</em> 服务被标记为危险。这是因为我们还没有实际运行一个web服务器，所以这个curl测试标记为失败了。</p>
-<h2 id="检测健康状态"><a href="#检测健康状态" class="headerlink" title="检测健康状态"></a>检测健康状态</h2><p>现在我们已经增加了一些检测，我们可以使用HTTP API来审查它们。首先，我们可以使用命令寻找任何失败的检测（注意，这个命了可以在任何节点上运行）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vagrant@n1:~$ curl http://localhost:8500/v1/health/state/critical</span><br><span class="line">[&#123;<span class="string">"Node"</span>:<span class="string">"agent-two"</span>,<span class="string">"CheckID"</span>:<span class="string">"service:web"</span>,<span class="string">"Name"</span>:<span class="string">"Service 'web' check"</span>,<span class="string">"Status"</span>:<span class="string">"critical"</span>,<span class="string">"Notes"</span>:<span class="string">""</span>,<span class="string">"ServiceID"</span>:<span class="string">"web"</span>,<span class="string">"ServiceName"</span>:<span class="string">"web"</span>&#125;]</span><br></pre></td></tr></table></figure></p>
-<p>我们可以看到现在只有一个检测，那是我们的 <em>web</em> 服务的检测，它被设置为危险状态。</p>
-<p>另外，我们可以尝试使用DNS查询web服务。Consul不会返回任何结果因为该服务是不健康的：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dig @127.0.0.1 -p 8600 web.service.consul</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;web.service.consul.        IN  A</span><br></pre></td></tr></table></figure></p>
-<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>在本篇教程中，你学会了增加健康检测是非常容易。通过更新配置文件并且发送一个 <em>SIGHUP</em> 信号给代理来更新检测定义。还可以选择使用HTTP API来动态地增加，删除，以及修改检测。该API也可以用于一个”dead man’s switch”，一个<a href="https://www.consul.io/docs/agent/checks.html#TTL" target="_blank" rel="external">TTL-based check</a>。TTL检测可以被用于一个应用程序和Consul是紧密集成的，使得业务逻辑评估是基于健康检测的一部分。</p>
-<p>接下来，我们将浏览<a href="">Consul的键／值存储</a>。</p>
-<p>翻译自<a href="https://www.consul.io/intro/getting-started/checks.html" target="_blank" rel="external">这里</a></p>
+        <h2 id="调试主进程"><a href="#调试主进程" class="headerlink" title="调试主进程"></a>调试主进程</h2><p>浏览器窗口的DevTools只能调试渲染进程的脚本（比如Web页面）。为了提供一种方法来调试主进程中的脚本，Electron提供了 <em>–debug</em> 以及 <em>–debug-brk</em> 的选项开关。</p>
+<h3 id="命令行开关"><a href="#命令行开关" class="headerlink" title="命令行开关"></a>命令行开关</h3><p>使用下列命令行切换到调试Electron的主进程模式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--debug=[port]</span><br></pre></td></tr></table></figure>
+<p>这个开关将使得Electron使用V8调试协议侦听在指定端口上。默认侦听端口是5858。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--debug-brk=[port]</span><br></pre></td></tr></table></figure>
+<p>类似于 <em>–debug</em> 但是这个开关将在脚本的第一行暂停执行。</p>
+<h3 id="使用node-inspector来调试"><a href="#使用node-inspector来调试" class="headerlink" title="使用node-inspector来调试"></a>使用node-inspector来调试</h3><p><em>注意：</em> 当前的Electron和node-inspector工作的不是非常好，并且当你在node-inspector的控制台检查 <em>process</em> 对象的时候主进程将会挂掉。</p>
+<ol>
+<li>确信安装了<a href="https://github.com/nodejs/node-gyp#installation" target="_blank" rel="external">node-gyp及其依赖的工具</a></li>
+<li><p>安装<a href="https://github.com/node-inspector/node-inspector" target="_blank" rel="external">node-inspector</a></p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install node-inspector</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装 <em>node-pre-gyp</em> 补丁</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install git+https://git@github.com/enlight/node-pre-gyp.git<span class="comment">#detect-electron-runtime-in-find</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重新编译 <em>node-inspector</em> <em>V8</em> 模块 (改变编译目标至你的Electron版本号)</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ node_modules/.bin/node-pre-gyp --target=0.36.11 --runtime=electron --fallback-to-build --directory node_modules/v8-debug/ --dist-url=https://atom.io/download/atom-shell reinstall</span><br><span class="line">$ node_modules/.bin/node-pre-gyp --target=0.36.11 --runtime=electron --fallback-to-build --directory node_modules/v8-profiler/ --dist-url=https://atom.io/download/atom-shell reinstall</span><br></pre></td></tr></table></figure>
+<p> 查阅<a href="http://electron.atom.io/docs/tutorial/using-native-node-modules#how-to-install-native-modules" target="_blank" rel="external">如何安装本地模块</a></p>
+</li>
+<li><p>打开Electron调试模式<br> 你可以使用一个debug标志来打开Electron，例如：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ electron --debug=5858 your/app</span><br><span class="line">```bash</span><br><span class="line">或在脚本第一行暂停</span><br><span class="line">```bash</span><br><span class="line">$ electron --debug-brk=5858 your/app</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用electron启动<a href="https://github.com/node-inspector/node-inspector" target="_blank" rel="external">node-inspector</a></p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ELECTRON_RUN_AS_NODE=<span class="literal">true</span> path/to/electron.exe node_modules/node-inspector/bin/inspector.js</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>装载调试器UI<br> 在Chrome浏览器中打开 <em><a href="http://127.0.0.1:8080/debug?ws=127.0.0.1:8080&amp;port=5858" target="_blank" rel="external">http://127.0.0.1:8080/debug?ws=127.0.0.1:8080&amp;port=5858</a></em>。 如果使用debug-brk来启动的话你必须点击暂停来看的看到完整的行。</p>
+</li>
+</ol>
+<p>本文翻译自[这里] (<a href="http://electron.atom.io/docs/tutorial/debugging-main-process/" target="_blank" rel="external">http://electron.atom.io/docs/tutorial/debugging-main-process/</a>)<br>未经授权，禁止转载。</p>
+<p>更多文章请浏览我的博客：<a href="http://minjing.github.io" target="_blank" rel="external">@gihub</a>, <a href="http://minjing.coding.me/" target="_blank" rel="external">@coding</a></p>
 
       
     </div>
@@ -360,9 +376,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Consul/" rel="tag">#Consul</a>
+            <a href="/tags/Electron/" rel="tag">#Electron</a>
           
-            <a href="/tags/MicroService/" rel="tag">#MicroService</a>
+            <a href="/tags/NodeJs/" rel="tag">#NodeJs</a>
+          
+            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
           
         </div>
       
@@ -371,17 +389,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/01/Consul-Getting-Started-04-Consul-Cluster/" rel="next" title="Consul入门04 － Consul集群">
-                <i class="fa fa-chevron-left"></i> Consul入门04 － Consul集群
+              <a href="/2016/05/26/Electron-Guides-Quick-Start/" rel="next" title="Electron指南 - 快速入门">
+                <i class="fa fa-chevron-left"></i> Electron指南 - 快速入门
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/01/Consul-Getting-Started-06-KeyValue-Data/" rel="prev" title="Consul入门06 － 键／值对数据">
-                Consul入门06 － 键／值对数据 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -407,8 +421,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/05/01/Consul-Getting-Started-05-Health-Checks/"
-           data-title="Consul入门05 － 健康检测" data-url="http://yoursite.com/2016/05/01/Consul-Getting-Started-05-Health-Checks/">
+      <div class="ds-thread" data-thread-key="2016/05/30/Electron-Guides-Debugging-the-Main-Process/"
+           data-title="Electron指南 - 调试主进程" data-url="http://yoursite.com/2016/05/30/Electron-Guides-Debugging-the-Main-Process/">
       </div>
     
   </div>
@@ -537,7 +551,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义检测"><span class="nav-number">1.</span> <span class="nav-text">定义检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#检测健康状态"><span class="nav-number">2.</span> <span class="nav-text">检测健康状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下一步"><span class="nav-number">3.</span> <span class="nav-text">下一步</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#调试主进程"><span class="nav-number">1.</span> <span class="nav-text">调试主进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#命令行开关"><span class="nav-number">1.1.</span> <span class="nav-text">命令行开关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用node-inspector来调试"><span class="nav-number">1.2.</span> <span class="nav-text">使用node-inspector来调试</span></a></li></ol></li></ol></div>
             
           </div>
         </section>

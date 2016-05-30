@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-05-27T11:05:01.000Z</updated>
+  <updated>2016-05-30T12:42:43.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,62 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Electron指南 - 调试主进程</title>
+    <link href="http://yoursite.com/2016/05/30/Electron-Guides-Debugging-the-Main-Process/"/>
+    <id>http://yoursite.com/2016/05/30/Electron-Guides-Debugging-the-Main-Process/</id>
+    <published>2016-05-30T07:41:00.000Z</published>
+    <updated>2016-05-30T12:42:43.000Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;调试主进程&quot;&gt;&lt;a href=&quot;#调试主进程&quot; class=&quot;headerlink&quot; title=&quot;调试主进程&quot;&gt;&lt;/a&gt;调试主进程&lt;/h2&gt;&lt;p&gt;浏览器窗口的DevTools只能调试渲染进程的脚本（比如Web页面）。为了提供一种方法来调试主进程中的脚本，Electron提供了 &lt;em&gt;–debug&lt;/em&gt; 以及 &lt;em&gt;–debug-brk&lt;/em&gt; 的选项开关。&lt;/p&gt;
+&lt;h3 id=&quot;命令行开关&quot;&gt;&lt;a href=&quot;#命令行开关&quot; class=&quot;headerlink&quot; title=&quot;命令行开关&quot;&gt;&lt;/a&gt;命令行开关&lt;/h3&gt;&lt;p&gt;使用下列命令行切换到调试Electron的主进程模式：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;--debug=[port]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这个开关将使得Electron使用V8调试协议侦听在指定端口上。默认侦听端口是5858。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;--debug-brk=[port]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;类似于 &lt;em&gt;–debug&lt;/em&gt; 但是这个开关将在脚本的第一行暂停执行。&lt;/p&gt;
+&lt;h3 id=&quot;使用node-inspector来调试&quot;&gt;&lt;a href=&quot;#使用node-inspector来调试&quot; class=&quot;headerlink&quot; title=&quot;使用node-inspector来调试&quot;&gt;&lt;/a&gt;使用node-inspector来调试&lt;/h3&gt;&lt;p&gt;&lt;em&gt;注意：&lt;/em&gt; 当前的Electron和node-inspector工作的不是非常好，并且当你在node-inspector的控制台检查 &lt;em&gt;process&lt;/em&gt; 对象的时候主进程将会挂掉。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;确信安装了&lt;a href=&quot;https://github.com/nodejs/node-gyp#installation&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;node-gyp及其依赖的工具&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;安装&lt;a href=&quot;https://github.com/node-inspector/node-inspector&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;node-inspector&lt;/a&gt;&lt;/p&gt;
+ &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ npm install node-inspector&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;安装 &lt;em&gt;node-pre-gyp&lt;/em&gt; 补丁&lt;/p&gt;
+ &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ npm install git+https://git@github.com/enlight/node-pre-gyp.git&lt;span class=&quot;comment&quot;&gt;#detect-electron-runtime-in-find&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;重新编译 &lt;em&gt;node-inspector&lt;/em&gt; &lt;em&gt;V8&lt;/em&gt; 模块 (改变编译目标至你的Electron版本号)&lt;/p&gt;
+ &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ node_modules/.bin/node-pre-gyp --target=0.36.11 --runtime=electron --fallback-to-build --directory node_modules/v8-debug/ --dist-url=https://atom.io/download/atom-shell reinstall&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ node_modules/.bin/node-pre-gyp --target=0.36.11 --runtime=electron --fallback-to-build --directory node_modules/v8-profiler/ --dist-url=https://atom.io/download/atom-shell reinstall&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt; 查阅&lt;a href=&quot;http://electron.atom.io/docs/tutorial/using-native-node-modules#how-to-install-native-modules&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;如何安装本地模块&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;打开Electron调试模式&lt;br&gt; 你可以使用一个debug标志来打开Electron，例如：&lt;/p&gt;
+ &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ electron --debug=5858 your/app&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;```bash&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;或在脚本第一行暂停&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;```bash&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ electron --debug-brk=5858 your/app&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;使用electron启动&lt;a href=&quot;https://github.com/node-inspector/node-inspector&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;node-inspector&lt;/a&gt;&lt;/p&gt;
+ &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ ELECTRON_RUN_AS_NODE=&lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt; path/to/electron.exe node_modules/node-inspector/bin/inspector.js&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;装载调试器UI&lt;br&gt; 在Chrome浏览器中打开 &lt;em&gt;&lt;a href=&quot;http://127.0.0.1:8080/debug?ws=127.0.0.1:8080&amp;amp;port=5858&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://127.0.0.1:8080/debug?ws=127.0.0.1:8080&amp;amp;port=5858&lt;/a&gt;&lt;/em&gt;。 如果使用debug-brk来启动的话你必须点击暂停来看的看到完整的行。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;本文翻译自[这里] (&lt;a href=&quot;http://electron.atom.io/docs/tutorial/debugging-main-process/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://electron.atom.io/docs/tutorial/debugging-main-process/&lt;/a&gt;)&lt;br&gt;未经授权，禁止转载。&lt;/p&gt;
+&lt;p&gt;更多文章请浏览我的博客：&lt;a href=&quot;http://minjing.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;@gihub&lt;/a&gt;, &lt;a href=&quot;http://minjing.coding.me/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;@coding&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;调试主进程&quot;&gt;&lt;a href=&quot;#调试主进程&quot; class=&quot;headerlink&quot; title=&quot;调试主进程&quot;&gt;&lt;/a&gt;调试主进程&lt;/h2&gt;&lt;p&gt;浏览器窗口的DevTools只能调试渲染进程的脚本（比如Web页面）。为了提供一种方法来调试主进程中的脚本，Elec
+    
+    </summary>
+    
+      <category term="Development" scheme="http://yoursite.com/categories/Development/"/>
+    
+    
+      <category term="Electron" scheme="http://yoursite.com/tags/Electron/"/>
+    
+      <category term="NodeJs" scheme="http://yoursite.com/tags/NodeJs/"/>
+    
+      <category term="JavaScript" scheme="http://yoursite.com/tags/JavaScript/"/>
+    
+  </entry>
   
   <entry>
     <title>Electron指南 - 快速入门</title>

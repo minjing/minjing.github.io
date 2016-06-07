@@ -94,7 +94,7 @@
 本篇的步骤基于前一篇 Consul集群，这里你应该运行有两个节点的集群。
 定义检测类似于服务，可以通过一个 检测定义或者通过调用HTTP API来注册一个检测。
 我们将使用检测定义的方法，因为就像服">
-<meta property="og:updated_time" content="2016-05-01T06:10:25.000Z">
+<meta property="og:updated_time" content="2016-06-07T12:24:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Consul入门05 － 健康检测">
 <meta name="twitter:description" content="我们已经看到了运行Consul，增加节点和服务，以及查询这些贱点和服务是多么地简单。在这篇教程中，我们将继续增加对节点和服务健康监测的教程。健康监测对服务发现是一个关键的组件，它避免使用不健康的服务。
@@ -338,7 +338,7 @@
 <p>我们可以看到现在只有一个检测，那是我们的 <em>web</em> 服务的检测，它被设置为危险状态。</p>
 <p>另外，我们可以尝试使用DNS查询web服务。Consul不会返回任何结果因为该服务是不健康的：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dig @127.0.0.1 -p 8600 web.service.consul</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;web.service.consul.        IN  A</span><br></pre></td></tr></table></figure></p>
 <h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>在本篇教程中，你学会了增加健康检测是非常容易。通过更新配置文件并且发送一个 <em>SIGHUP</em> 信号给代理来更新检测定义。还可以选择使用HTTP API来动态地增加，删除，以及修改检测。该API也可以用于一个”dead man’s switch”，一个<a href="https://www.consul.io/docs/agent/checks.html#TTL" target="_blank" rel="external">TTL-based check</a>。TTL检测可以被用于一个应用程序和Consul是紧密集成的，使得业务逻辑评估是基于健康检测的一部分。</p>
-<p>接下来，我们将浏览<a href="">Consul的键／值存储</a>。</p>
+<p>接下来，我们将浏览<a href="/2016/05/01/Consul-Getting-Started-06-KeyValue-Data/">Consul的键／值存储</a>。</p>
 <p>翻译自<a href="https://www.consul.io/intro/getting-started/checks.html" target="_blank" rel="external">这里</a></p>
 
       

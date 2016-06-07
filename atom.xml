@@ -241,7 +241,7 @@
     <link href="http://yoursite.com/2016/05/01/Consul-Getting-Started-06-KeyValue-Data/"/>
     <id>http://yoursite.com/2016/05/01/Consul-Getting-Started-06-KeyValue-Data/</id>
     <published>2016-05-01T05:15:00.000Z</published>
-    <updated>2016-05-01T06:10:32.000Z</updated>
+    <updated>2016-06-07T12:24:08.000Z</updated>
     
     <content type="html">&lt;p&gt;为了提供服务发现以及健康检测，Consul提供了非常容易使用的键／值对存储。它能被用于存储动态配置信息，帮助服务协作，建构leader选举机制，以及开发者可以想到的建构任何其它的东西。&lt;/p&gt;
 &lt;p&gt;本篇假设你至少有一个Consul代理在运行。&lt;/p&gt;
@@ -258,7 +258,7 @@
 &lt;p&gt;我们可以使用 &lt;em&gt;ModifyIndex&lt;/em&gt; 来等待指定键值的改变，例如，假设我们想要等待Key2的修改：&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ curl &lt;span class=&quot;string&quot;&gt;&quot;http://localhost:8500/v1/kv/web/key2?index=101&amp;amp;wait=5s&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[&amp;#123;&lt;span class=&quot;string&quot;&gt;&quot;CreateIndex&quot;&lt;/span&gt;:98,&lt;span class=&quot;string&quot;&gt;&quot;ModifyIndex&quot;&lt;/span&gt;:101,&lt;span class=&quot;string&quot;&gt;&quot;Key&quot;&lt;/span&gt;:&lt;span class=&quot;string&quot;&gt;&quot;web/key2&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;Flags&quot;&lt;/span&gt;:42,&lt;span class=&quot;string&quot;&gt;&quot;Value&quot;&lt;/span&gt;:&lt;span class=&quot;string&quot;&gt;&quot;dGVzdA==&quot;&lt;/span&gt;&amp;#125;]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;通过提供”?index=”参数，我们请求等待直到键包含了一个大于101的 &lt;em&gt;ModifyIndex&lt;/em&gt; 的值。无论如何由于”?wait=5”参数限制了查询最多等待5秒，之后会返回当前没有修改的值。该操作可以高效地等待键的更新。另外相同的方法可以用于等待一个键的集合，直到键集合中任何一个键发生的更新。&lt;/p&gt;
 &lt;h2 id=&quot;下一步&quot;&gt;&lt;a href=&quot;#下一步&quot; class=&quot;headerlink&quot; title=&quot;下一步&quot;&gt;&lt;/a&gt;下一步&lt;/h2&gt;&lt;p&gt;这里的例子仅仅展示了部分的API使用。如果需要完整的文档，请查询&lt;a href=&quot;https://www.consul.io/docs/agent/http/kv.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;the /kv/ route of the HTTP API&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;下一步，我们将看看Consul支持的&lt;a href=&quot;&quot;&gt;web界面&lt;/a&gt;中的选项&lt;/p&gt;
+&lt;p&gt;下一步，我们将看看Consul支持的&lt;a href=&quot;/2016/05/09/Consul-Getting-Started-07-Consul-Web-Ui/&quot;&gt;web界面&lt;/a&gt;中的选项&lt;/p&gt;
 &lt;p&gt;翻译自&lt;a href=&quot;https://www.consul.io/intro/getting-started/kv.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
 </content>
     
@@ -283,7 +283,7 @@
     <link href="http://yoursite.com/2016/05/01/Consul-Getting-Started-05-Health-Checks/"/>
     <id>http://yoursite.com/2016/05/01/Consul-Getting-Started-05-Health-Checks/</id>
     <published>2016-05-01T03:45:00.000Z</published>
-    <updated>2016-05-01T06:10:25.000Z</updated>
+    <updated>2016-06-07T12:24:08.000Z</updated>
     
     <content type="html">&lt;p&gt;我们已经看到了运行Consul，增加节点和服务，以及查询这些贱点和服务是多么地简单。在这篇教程中，我们将继续增加对节点和服务健康监测的教程。健康监测对服务发现是一个关键的组件，它避免使用不健康的服务。&lt;/p&gt;
 &lt;p&gt;本篇的步骤基于前一篇 &lt;em&gt;Consul集群&lt;/em&gt;，这里你应该运行有两个节点的集群。&lt;/p&gt;
@@ -300,7 +300,7 @@
 &lt;p&gt;我们可以看到现在只有一个检测，那是我们的 &lt;em&gt;web&lt;/em&gt; 服务的检测，它被设置为危险状态。&lt;/p&gt;
 &lt;p&gt;另外，我们可以尝试使用DNS查询web服务。Consul不会返回任何结果因为该服务是不健康的：&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dig @127.0.0.1 -p 8600 web.service.consul&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;;; QUESTION SECTION:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;;web.service.consul.        IN  A&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h2 id=&quot;下一步&quot;&gt;&lt;a href=&quot;#下一步&quot; class=&quot;headerlink&quot; title=&quot;下一步&quot;&gt;&lt;/a&gt;下一步&lt;/h2&gt;&lt;p&gt;在本篇教程中，你学会了增加健康检测是非常容易。通过更新配置文件并且发送一个 &lt;em&gt;SIGHUP&lt;/em&gt; 信号给代理来更新检测定义。还可以选择使用HTTP API来动态地增加，删除，以及修改检测。该API也可以用于一个”dead man’s switch”，一个&lt;a href=&quot;https://www.consul.io/docs/agent/checks.html#TTL&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;TTL-based check&lt;/a&gt;。TTL检测可以被用于一个应用程序和Consul是紧密集成的，使得业务逻辑评估是基于健康检测的一部分。&lt;/p&gt;
-&lt;p&gt;接下来，我们将浏览&lt;a href=&quot;&quot;&gt;Consul的键／值存储&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;接下来，我们将浏览&lt;a href=&quot;/2016/05/01/Consul-Getting-Started-06-KeyValue-Data/&quot;&gt;Consul的键／值存储&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;翻译自&lt;a href=&quot;https://www.consul.io/intro/getting-started/checks.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
 </content>
     
@@ -327,7 +327,7 @@
     <link href="http://yoursite.com/2016/05/01/Consul-Getting-Started-04-Consul-Cluster/"/>
     <id>http://yoursite.com/2016/05/01/Consul-Getting-Started-04-Consul-Cluster/</id>
     <published>2016-05-01T01:29:00.000Z</published>
-    <updated>2016-05-01T06:10:20.000Z</updated>
+    <updated>2016-06-07T12:24:08.000Z</updated>
     
     <content type="html">&lt;p&gt;我们已经启动了我们的第一个代理并且在这个代理上注册和查询了服务。这些显示了使用Consul是多么的容易但是并没有展示Consul的可扩展性以及可用于产品级别的服务发现的基础设施。在本篇向导中，我们将建立我们第一个多成员的真实的集群。&lt;/p&gt;
 &lt;p&gt;当一个Consul代理启动后，它对任何其他的节点都一无所知：它是个单独的隔离集群。为了让它感知其他的集群成员，代理必须加入一个现有的集群中去。为了加入一个现有的集群，它只需要知道一个单个的现有成员。它加入后，代理将广播该成员，并且快速发现集群中的其它成员。一个Consul代理能够加入任何其它的代理，不仅仅是那些运行在服务模式下的代理。&lt;/p&gt;
@@ -359,7 +359,7 @@
 &lt;p&gt;例如，从“agent-one”，我们可以查询节点”agent-two”的地址：&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;vagrant@n1:~$ dig @127.0.0.1 -p 8600 agent-two.node.consul&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;;; QUESTION SECTION:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;;agent-two.node.consul. IN  A&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;;; ANSWER SECTION:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;agent-two.node.consul.  0 IN    A   172.20.20.11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;这种查找节点的能力对于系统管理任务而言是非常有用的。例如知道了节点的地址，我们可以使用ssh登录到该节点并且可以非常容易地使得该节点成为Consul集群中的一部分并且查询它。&lt;/p&gt;
 &lt;h2 id=&quot;离开集群&quot;&gt;&lt;a href=&quot;#离开集群&quot; class=&quot;headerlink&quot; title=&quot;离开集群&quot;&gt;&lt;/a&gt;离开集群&lt;/h2&gt;&lt;p&gt;为了离开指定的集群，你可以优雅地退出一个代理（使用 &lt;em&gt;Ctrl-C&lt;/em&gt;）或者强制杀死代理进程。优雅地离开可以使得节点转换成离开状态；其它情况下，其它的节点检测这个节点将失败。其不同的地方在&lt;a href=&quot;https://www.consul.io/intro/getting-started/agent.html#stopping&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;有详细的描述。&lt;/p&gt;
-&lt;h2 id=&quot;下一步&quot;&gt;&lt;a href=&quot;#下一步&quot; class=&quot;headerlink&quot; title=&quot;下一步&quot;&gt;&lt;/a&gt;下一步&lt;/h2&gt;&lt;p&gt;现在有了一个多节点的Consul集群已经启动并且运行着。让我们通过&lt;a href=&quot;&quot;&gt;健康检测&lt;/a&gt;使我们的服务具有更强的鲁棒性。&lt;/p&gt;
+&lt;h2 id=&quot;下一步&quot;&gt;&lt;a href=&quot;#下一步&quot; class=&quot;headerlink&quot; title=&quot;下一步&quot;&gt;&lt;/a&gt;下一步&lt;/h2&gt;&lt;p&gt;现在有了一个多节点的Consul集群已经启动并且运行着。让我们通过&lt;a href=&quot;/2016/05/01/Consul-Getting-Started-05-Health-Checks/&quot;&gt;健康检测&lt;/a&gt;使我们的服务具有更强的鲁棒性。&lt;/p&gt;
 &lt;p&gt;翻译自&lt;a href=&quot;https://www.consul.io/intro/getting-started/join.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
 </content>
     
@@ -385,7 +385,7 @@
     <link href="http://yoursite.com/2016/04/26/Consul-Getting-Started-03-Services/"/>
     <id>http://yoursite.com/2016/04/26/Consul-Getting-Started-03-Services/</id>
     <published>2016-04-26T07:18:50.000Z</published>
-    <updated>2016-05-01T06:10:15.000Z</updated>
+    <updated>2016-06-07T12:24:08.000Z</updated>
     
     <content type="html">&lt;p&gt;在前面的步骤，我们运行了第一个代理，看到了集群的成员，并且查询了节点信息。在这篇指南里，我们将注册我们第一个服务并且查询这个服务。&lt;/p&gt;
 &lt;h2 id=&quot;定义一个服务&quot;&gt;&lt;a href=&quot;#定义一个服务&quot; class=&quot;headerlink&quot; title=&quot;定义一个服务&quot;&gt;&lt;/a&gt;定义一个服务&lt;/h2&gt;&lt;p&gt;一个服务能够通过提供一个&lt;a href=&quot;https://www.consul.io/docs/agent/services.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;服务定义&lt;/a&gt;或者调用适当的&lt;a href=&quot;https://www.consul.io/docs/agent/http.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;HTTP API&lt;/a&gt;来注册。&lt;/p&gt;
@@ -408,7 +408,7 @@
 &lt;p&gt;该目录API返回了指定节点以及指定的服务信息。就像我们马上要看到了&lt;a href=&quot;https://www.consul.io/intro/getting-started/checks.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;健康检测&lt;/a&gt;，通常我们的查询只是查询那些健康的实例，这些实例都是通过了健康检测的。这也是DNS在底层做的事情。下面的查询只查询健康的实例：&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ curl &lt;span class=&quot;string&quot;&gt;&#39;http://localhost:8500/v1/health/service/web?passing&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[&amp;#123;&lt;span class=&quot;string&quot;&gt;&quot;Node&quot;&lt;/span&gt;:&lt;span class=&quot;string&quot;&gt;&quot;Armons-MacBook-Air&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;Address&quot;&lt;/span&gt;:&lt;span class=&quot;string&quot;&gt;&quot;172.20.20.11&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;Service&quot;&lt;/span&gt;:&amp;#123; \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;ID&quot;&lt;/span&gt;:&lt;span class=&quot;string&quot;&gt;&quot;web&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;Service&quot;&lt;/span&gt;:&lt;span class=&quot;string&quot;&gt;&quot;web&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;Tags&quot;&lt;/span&gt;:[&lt;span class=&quot;string&quot;&gt;&quot;rails&quot;&lt;/span&gt;],&lt;span class=&quot;string&quot;&gt;&quot;Port&quot;&lt;/span&gt;:80&amp;#125;, &lt;span class=&quot;string&quot;&gt;&quot;Checks&quot;&lt;/span&gt;: ...&amp;#125;]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h2 id=&quot;更新服务&quot;&gt;&lt;a href=&quot;#更新服务&quot; class=&quot;headerlink&quot; title=&quot;更新服务&quot;&gt;&lt;/a&gt;更新服务&lt;/h2&gt;&lt;p&gt;当配置文件修改后服务定义可以被更新，需要发送 &lt;em&gt;SIGHUP&lt;/em&gt; 信号给代理。这可以让代理更新服务而无需停止代理或者让服务查询时服务不可用。&lt;/p&gt;
 &lt;p&gt;可以选择HTTP API来动态地增加，删除，以及更改服务。&lt;/p&gt;
-&lt;h2 id=&quot;下一步&quot;&gt;&lt;a href=&quot;#下一步&quot; class=&quot;headerlink&quot; title=&quot;下一步&quot;&gt;&lt;/a&gt;下一步&lt;/h2&gt;&lt;p&gt;我们现在配置了一个单代理，并且注册了一个服务。进展非常不错，但是下一步我们会展示Consul里最有价值的特性，&lt;a href=&quot;&quot;&gt;设置我们第一个集群&lt;/a&gt;!&lt;/p&gt;
+&lt;h2 id=&quot;下一步&quot;&gt;&lt;a href=&quot;#下一步&quot; class=&quot;headerlink&quot; title=&quot;下一步&quot;&gt;&lt;/a&gt;下一步&lt;/h2&gt;&lt;p&gt;我们现在配置了一个单代理，并且注册了一个服务。进展非常不错，但是下一步我们会展示Consul里最有价值的特性，&lt;a href=&quot;/2016/05/01/Consul-Getting-Started-04-Consul-Cluster/&quot;&gt;设置我们第一个集群&lt;/a&gt;!&lt;/p&gt;
 &lt;p&gt;翻译自&lt;a href=&quot;https://www.consul.io/intro/getting-started/services.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
 </content>
     
@@ -435,7 +435,7 @@
     <link href="http://yoursite.com/2016/04/25/Consul-Getting-Started-02-Run-The-Consul-Agent/"/>
     <id>http://yoursite.com/2016/04/25/Consul-Getting-Started-02-Run-The-Consul-Agent/</id>
     <published>2016-04-25T07:18:50.000Z</published>
-    <updated>2016-05-01T06:10:09.000Z</updated>
+    <updated>2016-06-07T12:24:08.000Z</updated>
     
     <content type="html">&lt;p&gt;在Consul安装完成后，必须先运行代理。该代理可以以服务器或者客户端模式运行。每个数据中心必须博阿含至少一个服务器，不过一个集群推荐3或5个服务器。一个单服务器的部署在失败的情况下会发生数据丢失因此不推荐使用。&lt;/p&gt;
 &lt;p&gt;所有其他的代理运行在客户端模式。一个客户端是一个非常轻量级的进程，它注册服务，运行健康检查，以及转发查询到服务器。代理必须运行在集群中的每个节点上。&lt;/p&gt;
@@ -453,7 +453,7 @@
 &lt;h2 id=&quot;停止代理&quot;&gt;&lt;a href=&quot;#停止代理&quot; class=&quot;headerlink&quot; title=&quot;停止代理&quot;&gt;&lt;/a&gt;停止代理&lt;/h2&gt;&lt;p&gt;你能够使用 &lt;em&gt;Ctrl-C&lt;/em&gt; （中断信号）来优雅地停止代理。停止代理后，你可以看到它脱离集群并且关闭的信息。&lt;/p&gt;
 &lt;p&gt;为了优雅地离开集群，Consul会通知其他的集群成员自己已经脱离了。如果你强制杀死代理的进程，那么其他的集群成员需要侦测节点是否失效。当一个成员离开，它的服务以及（checks）将从目录中移除。当一个成员失效，它的健康会简单地标记为critical，但它并不会被从目录中移除。Consul将自动尝试重新连接到失效的节点，并允许它在某些网络状况下恢复。&lt;/p&gt;
 &lt;p&gt;另外，如果一个代理以服务器模式启动，优雅地离开是非常重要的，因为这可以避免潜在的可用性问题，有关&lt;a href=&quot;https://www.consul.io/docs/internals/consensus.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;一致性协议&lt;/a&gt;，查看&lt;a href=&quot;https://www.consul.io/docs/guides/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;指南&lt;/a&gt;来获取更详细的关于如何安全的增加和移除服务器的信息。&lt;/p&gt;
-&lt;h2 id=&quot;下一步&quot;&gt;&lt;a href=&quot;#下一步&quot; class=&quot;headerlink&quot; title=&quot;下一步&quot;&gt;&lt;/a&gt;下一步&lt;/h2&gt;&lt;p&gt;一个简单的Consul集群已经启动了，让我们获取一些&lt;a href=&quot;&quot;&gt;服务&lt;/a&gt;吧！&lt;/p&gt;
+&lt;h2 id=&quot;下一步&quot;&gt;&lt;a href=&quot;#下一步&quot; class=&quot;headerlink&quot; title=&quot;下一步&quot;&gt;&lt;/a&gt;下一步&lt;/h2&gt;&lt;p&gt;一个简单的Consul集群已经启动了，让我们获取一些&lt;a href=&quot;/2016/04/26/Consul-Getting-Started-03-Services/&quot;&gt;服务&lt;/a&gt;吧！&lt;/p&gt;
 &lt;p&gt;翻译自&lt;a href=&quot;https://www.consul.io/intro/getting-started/agent.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
 </content>
     
@@ -479,7 +479,7 @@
     <link href="http://yoursite.com/2016/04/24/Consul-Getting-Started-01-Install-Consul/"/>
     <id>http://yoursite.com/2016/04/24/Consul-Getting-Started-01-Install-Consul/</id>
     <published>2016-04-24T07:18:50.000Z</published>
-    <updated>2016-05-01T06:10:02.000Z</updated>
+    <updated>2016-06-07T12:24:08.000Z</updated>
     
     <content type="html">&lt;p&gt;Consul必须首先安装在每个节点上当该节点需要称为Consul集群中的成员。为了使得安装更容易，Consul为所有支持的平台提供了二进制安装包。本页面不描述如何从源码来编译Consul。&lt;/p&gt;
 &lt;h2 id=&quot;安装Consul&quot;&gt;&lt;a href=&quot;#安装Consul&quot; class=&quot;headerlink&quot; title=&quot;安装Consul&quot;&gt;&lt;/a&gt;安装Consul&lt;/h2&gt;&lt;p&gt;为了安装Consul，需要在&lt;a href=&quot;https://www.consul.io/downloads.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;下载页面&lt;/a&gt;中找到和你系统匹配的包。Consul被打包成zip格式的压缩包。&lt;/p&gt;
@@ -489,7 +489,7 @@
 &lt;p&gt;如果没有&lt;a href=&quot;http://caskroom.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;cask plugin&lt;/a&gt;，那你可以通过下面命令安装：&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ brew install caskroom/cask/brew-cask&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h2 id=&quot;验证安装&quot;&gt;&lt;a href=&quot;#验证安装&quot; class=&quot;headerlink&quot; title=&quot;验证安装&quot;&gt;&lt;/a&gt;验证安装&lt;/h2&gt;&lt;p&gt;安装Consul后，通过打开新的终端回话并且输入&lt;em&gt;consul&lt;/em&gt;是否可用来验证安装是否工作。通过执行&lt;em&gt;consul&lt;/em&gt;你应该可以看到下面类似的输出：&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ consul&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;usage: consul [--version] [--help] &amp;lt;&lt;span class=&quot;built_in&quot;&gt;command&lt;/span&gt;&amp;gt; [&amp;lt;args&amp;gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Available commands are:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    agent          Runs a Consul agent&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    event          Fire a new event&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;exec&lt;/span&gt;           Executes a &lt;span class=&quot;built_in&quot;&gt;command&lt;/span&gt; on Consul nodes&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    force-leave    Forces a member of the cluster to enter the &lt;span class=&quot;string&quot;&gt;&quot;left&quot;&lt;/span&gt; state&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    info           Provides debugging information &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; operators&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    join           Tell Consul agent to join cluster&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    keygen         Generates a new encryption key&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    leave          Gracefully leaves the Consul cluster and shuts down&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    members        Lists the members of a Consul cluster&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    monitor        Stream logs from a Consul agent&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    reload         Triggers the agent to reload configuration files&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    version        Prints the Consul version&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    watch          Watch &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; changes &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; Consul&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;如果终端报告&lt;em&gt;consul&lt;/em&gt;没有被找到的错误，那可能是你的&lt;em&gt;PATH&lt;/em&gt;没有被正确的设置导致的。请会到前面的步骤去检查你的&lt;em&gt;PATH&lt;/em&gt;环境变量是否包含了安装Consul目录。&lt;/p&gt;
-&lt;h2 id=&quot;下一步&quot;&gt;&lt;a href=&quot;#下一步&quot; class=&quot;headerlink&quot; title=&quot;下一步&quot;&gt;&lt;/a&gt;下一步&lt;/h2&gt;&lt;p&gt;Consul已经安装完成，让我们来&lt;a href=&quot;&quot;&gt;启动代理&lt;/a&gt;!&lt;/p&gt;
+&lt;h2 id=&quot;下一步&quot;&gt;&lt;a href=&quot;#下一步&quot; class=&quot;headerlink&quot; title=&quot;下一步&quot;&gt;&lt;/a&gt;下一步&lt;/h2&gt;&lt;p&gt;Consul已经安装完成，让我们来&lt;a href=&quot;/2016/04/25/Consul-Getting-Started-02-Run-The-Consul-Agent/&quot;&gt;启动代理&lt;/a&gt;!&lt;/p&gt;
 &lt;p&gt;翻译自&lt;a href=&quot;https://www.consul.io/intro/getting-started/install.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
 </content>
     

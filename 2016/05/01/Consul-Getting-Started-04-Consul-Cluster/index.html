@@ -90,7 +90,7 @@
 <meta property="og:site_name" content="Min's Blog">
 <meta property="og:description" content="我们已经启动了我们的第一个代理并且在这个代理上注册和查询了服务。这些显示了使用Consul是多么的容易但是并没有展示Consul的可扩展性以及可用于产品级别的服务发现的基础设施。在本篇向导中，我们将建立我们第一个多成员的真实的集群。
 当一个Consul代理启动后，它对任何其他的节点都一无所知：它是个单独的隔离集群。为了让它感知其他的集群成员，代理必须加入一个现有的集群中去。为了加入一个现有的集群，">
-<meta property="og:updated_time" content="2016-05-01T06:10:20.000Z">
+<meta property="og:updated_time" content="2016-06-07T12:24:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Consul入门04 － Consul集群">
 <meta name="twitter:description" content="我们已经启动了我们的第一个代理并且在这个代理上注册和查询了服务。这些显示了使用Consul是多么的容易但是并没有展示Consul的可扩展性以及可用于产品级别的服务发现的基础设施。在本篇向导中，我们将建立我们第一个多成员的真实的集群。
@@ -347,7 +347,7 @@
 <p>例如，从“agent-one”，我们可以查询节点”agent-two”的地址：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vagrant@n1:~$ dig @127.0.0.1 -p 8600 agent-two.node.consul</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;agent-two.node.consul. IN  A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">agent-two.node.consul.  0 IN    A   172.20.20.11</span><br></pre></td></tr></table></figure></p>
 <p>这种查找节点的能力对于系统管理任务而言是非常有用的。例如知道了节点的地址，我们可以使用ssh登录到该节点并且可以非常容易地使得该节点成为Consul集群中的一部分并且查询它。</p>
 <h2 id="离开集群"><a href="#离开集群" class="headerlink" title="离开集群"></a>离开集群</h2><p>为了离开指定的集群，你可以优雅地退出一个代理（使用 <em>Ctrl-C</em>）或者强制杀死代理进程。优雅地离开可以使得节点转换成离开状态；其它情况下，其它的节点检测这个节点将失败。其不同的地方在<a href="https://www.consul.io/intro/getting-started/agent.html#stopping" target="_blank" rel="external">这里</a>有详细的描述。</p>
-<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>现在有了一个多节点的Consul集群已经启动并且运行着。让我们通过<a href="">健康检测</a>使我们的服务具有更强的鲁棒性。</p>
+<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>现在有了一个多节点的Consul集群已经启动并且运行着。让我们通过<a href="/2016/05/01/Consul-Getting-Started-05-Health-Checks/">健康检测</a>使我们的服务具有更强的鲁棒性。</p>
 <p>翻译自<a href="https://www.consul.io/intro/getting-started/join.html" target="_blank" rel="external">这里</a></p>
 
       

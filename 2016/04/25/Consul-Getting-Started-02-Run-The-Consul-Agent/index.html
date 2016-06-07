@@ -92,7 +92,7 @@
 <meta property="og:description" content="在Consul安装完成后，必须先运行代理。该代理可以以服务器或者客户端模式运行。每个数据中心必须博阿含至少一个服务器，不过一个集群推荐3或5个服务器。一个单服务器的部署在失败的情况下会发生数据丢失因此不推荐使用。
 所有其他的代理运行在客户端模式。一个客户端是一个非常轻量级的进程，它注册服务，运行健康检查，以及转发查询到服务器。代理必须运行在集群中的每个节点上。
 更多的关于启动一个数据中心的细节，请">
-<meta property="og:updated_time" content="2016-05-01T06:10:09.000Z">
+<meta property="og:updated_time" content="2016-06-07T12:24:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Consul入门02 － 运行Consul代理">
 <meta name="twitter:description" content="在Consul安装完成后，必须先运行代理。该代理可以以服务器或者客户端模式运行。每个数据中心必须博阿含至少一个服务器，不过一个集群推荐3或5个服务器。一个单服务器的部署在失败的情况下会发生数据丢失因此不推荐使用。
@@ -336,7 +336,7 @@
 <h2 id="停止代理"><a href="#停止代理" class="headerlink" title="停止代理"></a>停止代理</h2><p>你能够使用 <em>Ctrl-C</em> （中断信号）来优雅地停止代理。停止代理后，你可以看到它脱离集群并且关闭的信息。</p>
 <p>为了优雅地离开集群，Consul会通知其他的集群成员自己已经脱离了。如果你强制杀死代理的进程，那么其他的集群成员需要侦测节点是否失效。当一个成员离开，它的服务以及（checks）将从目录中移除。当一个成员失效，它的健康会简单地标记为critical，但它并不会被从目录中移除。Consul将自动尝试重新连接到失效的节点，并允许它在某些网络状况下恢复。</p>
 <p>另外，如果一个代理以服务器模式启动，优雅地离开是非常重要的，因为这可以避免潜在的可用性问题，有关<a href="https://www.consul.io/docs/internals/consensus.html" target="_blank" rel="external">一致性协议</a>，查看<a href="https://www.consul.io/docs/guides/" target="_blank" rel="external">指南</a>来获取更详细的关于如何安全的增加和移除服务器的信息。</p>
-<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>一个简单的Consul集群已经启动了，让我们获取一些<a href="">服务</a>吧！</p>
+<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>一个简单的Consul集群已经启动了，让我们获取一些<a href="/2016/04/26/Consul-Getting-Started-03-Services/">服务</a>吧！</p>
 <p>翻译自<a href="https://www.consul.io/intro/getting-started/agent.html" target="_blank" rel="external">这里</a></p>
 
       

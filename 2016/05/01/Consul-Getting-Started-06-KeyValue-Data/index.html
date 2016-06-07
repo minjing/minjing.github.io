@@ -90,7 +90,7 @@
 <meta property="og:site_name" content="Min's Blog">
 <meta property="og:description" content="为了提供服务发现以及健康检测，Consul提供了非常容易使用的键／值对存储。它能被用于存储动态配置信息，帮助服务协作，建构leader选举机制，以及开发者可以想到的建构任何其它的东西。
 本篇假设你至少有一个Consul代理在运行。">
-<meta property="og:updated_time" content="2016-05-01T06:10:32.000Z">
+<meta property="og:updated_time" content="2016-06-07T12:24:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Consul入门06 － 键／值对数据">
 <meta name="twitter:description" content="为了提供服务发现以及健康检测，Consul提供了非常容易使用的键／值对存储。它能被用于存储动态配置信息，帮助服务协作，建构leader选举机制，以及开发者可以想到的建构任何其它的东西。
@@ -332,7 +332,7 @@
 <p>我们可以使用 <em>ModifyIndex</em> 来等待指定键值的改变，例如，假设我们想要等待Key2的修改：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl <span class="string">"http://localhost:8500/v1/kv/web/key2?index=101&amp;wait=5s"</span></span><br><span class="line">[&#123;<span class="string">"CreateIndex"</span>:98,<span class="string">"ModifyIndex"</span>:101,<span class="string">"Key"</span>:<span class="string">"web/key2"</span>,<span class="string">"Flags"</span>:42,<span class="string">"Value"</span>:<span class="string">"dGVzdA=="</span>&#125;]</span><br></pre></td></tr></table></figure></p>
 <p>通过提供”?index=”参数，我们请求等待直到键包含了一个大于101的 <em>ModifyIndex</em> 的值。无论如何由于”?wait=5”参数限制了查询最多等待5秒，之后会返回当前没有修改的值。该操作可以高效地等待键的更新。另外相同的方法可以用于等待一个键的集合，直到键集合中任何一个键发生的更新。</p>
 <h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>这里的例子仅仅展示了部分的API使用。如果需要完整的文档，请查询<a href="https://www.consul.io/docs/agent/http/kv.html" target="_blank" rel="external">the /kv/ route of the HTTP API</a>。</p>
-<p>下一步，我们将看看Consul支持的<a href="">web界面</a>中的选项</p>
+<p>下一步，我们将看看Consul支持的<a href="/2016/05/09/Consul-Getting-Started-07-Consul-Web-Ui/">web界面</a>中的选项</p>
 <p>翻译自<a href="https://www.consul.io/intro/getting-started/kv.html" target="_blank" rel="external">这里</a></p>
 
       

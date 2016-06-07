@@ -94,7 +94,7 @@
 定义一个服务一个服务能够通过提供一个服务定义或者调用适当的HTTP API来注册。
 服务定义是最通用的注册服务方法，那么我们将使用这种方法来注册服务。我们将建构一个代理配置，前面的步骤已经描述过。
 首先，为Consul配置创建一个目录。Consul装载配置目录中所有的">
-<meta property="og:updated_time" content="2016-05-01T06:10:15.000Z">
+<meta property="og:updated_time" content="2016-06-07T12:24:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Consul入门03 － 注册服务">
 <meta name="twitter:description" content="在前面的步骤，我们运行了第一个代理，看到了集群的成员，并且查询了节点信息。在这篇指南里，我们将注册我们第一个服务并且查询这个服务。
@@ -344,7 +344,7 @@
 <p>该目录API返回了指定节点以及指定的服务信息。就像我们马上要看到了<a href="https://www.consul.io/intro/getting-started/checks.html" target="_blank" rel="external">健康检测</a>，通常我们的查询只是查询那些健康的实例，这些实例都是通过了健康检测的。这也是DNS在底层做的事情。下面的查询只查询健康的实例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl <span class="string">'http://localhost:8500/v1/health/service/web?passing'</span></span><br><span class="line">[&#123;<span class="string">"Node"</span>:<span class="string">"Armons-MacBook-Air"</span>,<span class="string">"Address"</span>:<span class="string">"172.20.20.11"</span>,<span class="string">"Service"</span>:&#123; \</span><br><span class="line">    <span class="string">"ID"</span>:<span class="string">"web"</span>, <span class="string">"Service"</span>:<span class="string">"web"</span>, <span class="string">"Tags"</span>:[<span class="string">"rails"</span>],<span class="string">"Port"</span>:80&#125;, <span class="string">"Checks"</span>: ...&#125;]</span><br></pre></td></tr></table></figure></p>
 <h2 id="更新服务"><a href="#更新服务" class="headerlink" title="更新服务"></a>更新服务</h2><p>当配置文件修改后服务定义可以被更新，需要发送 <em>SIGHUP</em> 信号给代理。这可以让代理更新服务而无需停止代理或者让服务查询时服务不可用。</p>
 <p>可以选择HTTP API来动态地增加，删除，以及更改服务。</p>
-<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>我们现在配置了一个单代理，并且注册了一个服务。进展非常不错，但是下一步我们会展示Consul里最有价值的特性，<a href="">设置我们第一个集群</a>!</p>
+<h2 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h2><p>我们现在配置了一个单代理，并且注册了一个服务。进展非常不错，但是下一步我们会展示Consul里最有价值的特性，<a href="/2016/05/01/Consul-Getting-Started-04-Consul-Cluster/">设置我们第一个集群</a>!</p>
 <p>翻译自<a href="https://www.consul.io/intro/getting-started/services.html" target="_blank" rel="external">这里</a></p>
 
       

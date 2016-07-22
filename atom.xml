@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-05-30T12:42:43.000Z</updated>
+  <updated>2016-07-22T12:18:57.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,71 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spock框架参考02 - 入门</title>
+    <link href="http://yoursite.com/2016/07/05/Spock-Reference-02-Getting-Started/"/>
+    <id>http://yoursite.com/2016/07/05/Spock-Reference-02-Getting-Started/</id>
+    <published>2016-07-05T02:57:00.000Z</published>
+    <updated>2016-07-22T12:18:57.000Z</updated>
+    
+    <content type="html">&lt;p&gt;开始使用Spock是一件非常容易的事情。本节将为你展示如何使用Spock。&lt;/p&gt;
+&lt;h2 id=&quot;Spock-Web控制台&quot;&gt;&lt;a href=&quot;#Spock-Web控制台&quot; class=&quot;headerlink&quot; title=&quot;Spock Web控制台&quot;&gt;&lt;/a&gt;Spock Web控制台&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://webconsole.spockframework.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Spock Web控制台&lt;/a&gt;是个能够实时显示,编辑，运行以及发布Spock规约的Web站点。你可以尝试任何Spock功能的好地方，因为你无需安装和修改本地运行时环境。那么为什么不马上开始运行&lt;a href=&quot;http://webconsole.spockframework.org/edit/9001&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hello, Spock!&lt;/a&gt;呢？&lt;/p&gt;
+&lt;h2 id=&quot;Spock示例项目&quot;&gt;&lt;a href=&quot;#Spock示例项目&quot; class=&quot;headerlink&quot; title=&quot;Spock示例项目&quot;&gt;&lt;/a&gt;Spock示例项目&lt;/h2&gt;&lt;p&gt;为了在你本地尝试Spock，你可以克隆或者下载/解压&lt;a href=&quot;https://github.com/spockframework/spock-example&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Spock的示例项目&lt;/a&gt;。它完全可以和Ant, Gradle,以及Maven等建构工具一起工作而无需额外的设置。Gradle建构工具甚至可以引导Gradle本身并且使用一个命令使其在Eclipse或IDEA中启动和运行。查阅README来获得详细的指令。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;开始使用Spock是一件非常容易的事情。本节将为你展示如何使用Spock。&lt;/p&gt;
+&lt;h2 id=&quot;Spock-Web控制台&quot;&gt;&lt;a href=&quot;#Spock-Web控制台&quot; class=&quot;headerlink&quot; title=&quot;Spock Web控制台&quot;&gt;&lt;/a&gt;Spock
+    
+    </summary>
+    
+      <category term="Development" scheme="http://yoursite.com/categories/Development/"/>
+    
+      <category term="Testing" scheme="http://yoursite.com/categories/Development/Testing/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Groovy" scheme="http://yoursite.com/tags/Groovy/"/>
+    
+      <category term="Testing" scheme="http://yoursite.com/tags/Testing/"/>
+    
+      <category term="Spock" scheme="http://yoursite.com/tags/Spock/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spock框架参考01 - 简介</title>
+    <link href="http://yoursite.com/2016/07/04/Spock-Reference-01-Introduction/"/>
+    <id>http://yoursite.com/2016/07/04/Spock-Reference-01-Introduction/</id>
+    <published>2016-07-04T08:26:00.000Z</published>
+    <updated>2016-07-22T12:18:57.000Z</updated>
+    
+    <content type="html">&lt;p&gt;Spock为Java以及Groovy应用程序提供了测试和规约框架。它最突出的优点是其优雅和高表现的规约语言。由于基于JUnit runner，Spock兼容大多数的IDEs，建构工具，以及持续集成服务器。Spock的灵感来自于&lt;a href=&quot;http://junit.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;JUnit&lt;/a&gt;, &lt;a href=&quot;http://www.jmock.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;jMock&lt;/a&gt;, &lt;a href=&quot;http://rspec.info/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;RSpec&lt;/a&gt;, &lt;a href=&quot;http://groovy-lang.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Groovy&lt;/a&gt;, &lt;a href=&quot;http://scala-lang.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Scala&lt;/a&gt;, &lt;a href=&quot;https://en.wikipedia.org/wiki/Vulcan_(Star_Trek&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Vulcans&lt;/a&gt;), 以及来源于生命的美妙。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Spock为Java以及Groovy应用程序提供了测试和规约框架。它最突出的优点是其优雅和高表现的规约语言。由于基于JUnit runner，Spock兼容大多数的IDEs，建构工具，以及持续集成服务器。Spock的灵感来自于&lt;a href=&quot;http://junit.or
+    
+    </summary>
+    
+      <category term="Development" scheme="http://yoursite.com/categories/Development/"/>
+    
+      <category term="Testing" scheme="http://yoursite.com/categories/Development/Testing/"/>
+    
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Groovy" scheme="http://yoursite.com/tags/Groovy/"/>
+    
+      <category term="Testing" scheme="http://yoursite.com/tags/Testing/"/>
+    
+      <category term="Spock" scheme="http://yoursite.com/tags/Spock/"/>
+    
+  </entry>
   
   <entry>
     <title>Electron指南 - 调试主进程</title>

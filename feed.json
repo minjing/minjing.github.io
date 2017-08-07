@@ -1,0 +1,26 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "inactionware",
+    "description": "",
+    "home_page_url": "https://minjing.github.io/minjing.github.io",
+    "feed_url": "https://minjing.github.io/minjing.github.io/feed.json",
+    "user_comment": "",
+    "author": {
+        "name": "Min"
+    },
+    "items": [
+        {
+            "id": "https://minjing.github.io/minjing.github.io/ru-he-shi-yong-elk-lai-jian-kong-xing-neng.html",
+            "url": "https://minjing.github.io/minjing.github.io/ru-he-shi-yong-elk-lai-jian-kong-xing-neng.html",
+            "title": "如何使用ELK来监控性能",
+            "content_html": "每当我解决一些应用性能问题的时候，我常常会看到一个服务由于高的CPU利用率而使得一台或者多台服务器运行变得非常缓慢。这也许意味着它因为高负载而导致资源缺乏，但是通常情况下这其实是代码有bug，一个异常或者一个错误的流程导致过多占用了系统资源。为了把这些问题找出来，我不得不在NewRelic/Nagios和ELK之间查看信息。<br><br>所以我确信我需要有一个单一的管理面板来查看从各个应用，操作系统以及网络设备上收集来的事件组合而成的性能指标<br><br>为了使用ELK来监控你平台的性能，你需要集成一系列的工具。Probes是必须包含的组件，它运行在各个主机上用来收集各种系统性能指标。然后，采集的数据需要发送给Logstash，然后在Elasticsearch中进行聚集，最后由Kibana转换成图形。最终，软件服务操作组成员使用这些图形展示系统性能。在这篇文章中，我将分享我们如何建构我们的ELK软件栈来监控服务的性能。",
+            "author": {
+                "name": "Min"
+            },
+            "tags": [
+            ],
+            "date_published": "2017-08-07T20:02:53+08:00",
+            "date_modified": "2017-08-07T19:59:52+08:00"
+        }
+    ]
+}
